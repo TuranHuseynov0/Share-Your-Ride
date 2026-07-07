@@ -91,8 +91,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\Wallet.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:58:48.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:58:48.003Z"
             },
             {
               "$type": "Document",
@@ -104,8 +103,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\RideApplication.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:58:20.391Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:58:20.391Z"
             },
             {
               "$type": "Document",
@@ -117,8 +115,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\Trajectory.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAA8wA8AAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:55:02.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:55:02.588Z"
             },
             {
               "$type": "Document",
@@ -130,8 +127,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\Stop.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:54:38.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:54:38.255Z"
             },
             {
               "$type": "Document",
@@ -143,8 +139,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\VehicleImage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:54:19.634Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:54:19.634Z"
             },
             {
               "$type": "Document",
@@ -156,8 +151,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\Vehicle.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAQwBQAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:53:13.429Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:53:13.429Z"
             },
             {
               "$type": "Document",
@@ -169,8 +163,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Entities\\User.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAQwBgAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:46:30.693Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:46:30.693Z"
             },
             {
               "$type": "Document",
@@ -182,8 +175,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Enums\\TransactionType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:32:00.329Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:32:00.329Z"
             },
             {
               "$type": "Document",
@@ -195,8 +187,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Enums\\RideApplicationStatus.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:31:23.529Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:31:23.529Z"
             },
             {
               "$type": "Document",
@@ -208,8 +199,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Enums\\DayOfWeekType.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:31:00.307Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:31:00.307Z"
             },
             {
               "$type": "Document",
@@ -221,8 +211,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Enums\\TrajectoryRole.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:30:30.242Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T16:30:30.242Z"
             },
             {
               "$type": "Document",
@@ -234,8 +223,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Common\\BaseEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T15:45:56.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T15:45:56.561Z"
             },
             {
               "$type": "Document",
@@ -247,8 +235,7 @@
               "RelativeToolTip": "ShareYourRide.Domain\\Enums\\UserStatus.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T15:45:45.283Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T15:45:45.283Z"
             }
           ]
         }
