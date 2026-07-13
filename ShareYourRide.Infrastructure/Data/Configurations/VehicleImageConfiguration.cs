@@ -15,6 +15,8 @@ namespace ShareYourRide.Infrastructure.Data.Configurations
         {
             builder.ToTable("VehicleImages");
             builder.Property(i => i.ImagePath).IsRequired();
+
+            builder.HasIndex(i => new { i.VehicleId, i.Side }).IsUnique();
         }
     }
 }
