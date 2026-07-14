@@ -17,5 +17,7 @@ namespace ShareYourRide.Infrastructure.Repositories.Interfaces
         IGenericRepository<RideApplication> RideApplications { get; }
         IGenericRepository<Wallet> Wallets { get; }
         IGenericRepository<WalletTransaction> WalletTransactions { get; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

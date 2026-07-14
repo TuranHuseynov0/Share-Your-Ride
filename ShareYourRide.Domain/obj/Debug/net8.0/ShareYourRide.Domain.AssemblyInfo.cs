@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShareYourRide.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81b759e2f7bbdbf47a194fdc0341ce059c127bc8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f248209f7bcb7428f90b7b108ca80bffbb0a352")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShareYourRide.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShareYourRide.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
