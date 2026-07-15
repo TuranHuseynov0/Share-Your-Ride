@@ -14,7 +14,7 @@ namespace ShareYourRide.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +56,9 @@ namespace ShareYourRide.API
 
             builder.Services.AddScoped<IUnitOfWork, ShareYourRide.Infrastructure.Repositories.Implementations.UnitOfWork>();
             builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ISmsSender, ConsoleSmsSender>();
+            builder.Services.AddScoped<IEmailSender, ConsoleEmailSender>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -73,6 +76,14 @@ namespace ShareYourRide.API
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
+
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+                await ShareYourRide.Infrastructure.Data.Seed.RoleSeeder.SeedRolesAsync(roleManager);
+            }
+
             app.Run();
         }
     }

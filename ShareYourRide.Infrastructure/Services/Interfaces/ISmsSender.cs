@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ShareYourRide.Infrastructure.Services.Interfaces
 {
     public interface ISmsSender
-    {
+    {   
         Task SendAsync(string phoneNumber, string message);
     }
 }
