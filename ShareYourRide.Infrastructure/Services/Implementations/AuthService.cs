@@ -195,7 +195,8 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 ExpiresAt = expiresAt,
                 UserId = domainUser.Id,
                 FullName = $"{domainUser.FirstName} {domainUser.LastName}",
-                Status = domainUser.Status
+                Status = domainUser.Status,
+                Role = role
             };
         }
 

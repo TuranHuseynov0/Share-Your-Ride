@@ -14,5 +14,6 @@ namespace ShareYourRide.Application.DTOs.Auth
         public Guid UserId { get; set; }
         public string FullName { get; set; } = default!;
         public UserStatus Status { get; set; }
+        public string Role { get; set; } = default!;
     }
 }
