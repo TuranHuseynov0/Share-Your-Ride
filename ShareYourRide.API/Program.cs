@@ -59,6 +59,8 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ISmsSender, ConsoleSmsSender>();
             builder.Services.AddScoped<IEmailSender, ConsoleEmailSender>();
+            builder.Services.AddScoped<IStopService, ShareYourRide.Infrastructure.Services.Implementations.StopService>();
+            builder.Services.AddScoped<ITrajectoryService, ShareYourRide.Infrastructure.Services.Implementations.TrajectoryService>();
             builder.Services.AddScoped<IAdminService, ShareYourRide.Infrastructure.Services.Implementations.AdminService>();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -113,6 +115,9 @@ namespace ShareYourRide.API
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
                 await ShareYourRide.Infrastructure.Data.Seed.AdminSeeder.SeedAdminAsync(userManager, unitOfWork, app.Configuration);
+
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                await ShareYourRide.Infrastructure.Data.Seed.StopSeeder.SeedStopAsync(dbContext);
             }
 
             app.Run();

@@ -3,16 +3,68 @@
   "WorkspaceRootPath": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\implementations\\trajectoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\implementations\\trajectoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.api\\controllers\\stopcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|solutionrelative:shareyourride.api\\controllers\\stopcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.api\\controllers\\trajectorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|solutionrelative:shareyourride.api\\controllers\\trajectorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|solutionrelative:shareyourride.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|solutionrelative:shareyourride.api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\data\\seed\\stopseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\data\\seed\\stopseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.application\\dtos\\trajectory\\createtrajectorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|solutionrelative:shareyourride.application\\dtos\\trajectory\\createtrajectorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.application\\dtos\\trajectory\\createtrajectoryresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|solutionrelative:shareyourride.application\\dtos\\trajectory\\createtrajectoryresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\implementations\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\implementations\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7167960-3599-4781-B6D0-3EBFD81A58F0}|ShareYourRide.Domain\\ShareYourRide.Domain.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.domain\\entities\\trajectory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7167960-3599-4781-B6D0-3EBFD81A58F0}|ShareYourRide.Domain\\ShareYourRide.Domain.csproj|solutionrelative:shareyourride.domain\\entities\\trajectory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\interfaces\\itrajectoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\interfaces\\itrajectoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.application\\dtos\\trajectory\\drivermatchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|solutionrelative:shareyourride.application\\dtos\\trajectory\\drivermatchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\implementations\\stopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\implementations\\stopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\implementations\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\implementations\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\interfaces\\istopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\interfaces\\istopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.application\\dtos\\stop\\stopdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3D79781-2CD6-4080-BEE2-E1008683B2D9}|ShareYourRide.Application\\ShareYourRide.Application.csproj|solutionrelative:shareyourride.application\\dtos\\stop\\stopdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21F0F761-C41F-4E1C-8AC7-8C606831B997}|ShareYourRide.API\\ShareYourRide.API.csproj|solutionrelative:shareyourride.api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\interfaces\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -73,10 +125,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\repositories\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\repositories\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\implementations\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|solutionrelative:shareyourride.infrastructure\\services\\implementations\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{27D7A309-B93E-462D-847C-05169A42ED40}|ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj|c:\\users\\victus\\source\\repos\\shareyourride\\shareyourride.infrastructure\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -226,11 +274,193 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Program.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Program.cs",
+              "RelativeToolTip": "ShareYourRide.API\\Program.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAAAHcAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-08T16:31:29.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StopSeeder.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Seed\\StopSeeder.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Seed\\StopSeeder.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Seed\\StopSeeder.cs",
+              "RelativeToolTip": "ShareYourRide.Infrastructure\\Data\\Seed\\StopSeeder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T16:48:02.606Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TrajectoryController.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Controllers\\TrajectoryController.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.API\\Controllers\\TrajectoryController.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Controllers\\TrajectoryController.cs",
+              "RelativeToolTip": "ShareYourRide.API\\Controllers\\TrajectoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T18:25:13.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "StopController.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Controllers\\StopController.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.API\\Controllers\\StopController.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Controllers\\StopController.cs",
+              "RelativeToolTip": "ShareYourRide.API\\Controllers\\StopController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:18:23.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TrajectoryService.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\TrajectoryService.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\TrajectoryService.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\TrajectoryService.cs",
+              "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Implementations\\TrajectoryService.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAApwBgAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:23:00.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CreateTrajectoryDto.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryDto.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryDto.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryDto.cs",
+              "RelativeToolTip": "ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:19:19.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreateTrajectoryResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryResponseDto.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryResponseDto.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryResponseDto.cs",
+              "RelativeToolTip": "ShareYourRide.Application\\DTOs\\Trajectory\\CreateTrajectoryResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:21:53.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Trajectory.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Entities\\Trajectory.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Domain\\Entities\\Trajectory.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Entities\\Trajectory.cs",
+              "RelativeToolTip": "ShareYourRide.Domain\\Entities\\Trajectory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T18:03:28.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
+              "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwAEAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-14T08:08:36.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ITrajectoryService.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\ITrajectoryService.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\ITrajectoryService.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\ITrajectoryService.cs",
+              "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Interfaces\\ITrajectoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:22:23.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DriverMatchDto.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Trajectory\\DriverMatchDto.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Trajectory\\DriverMatchDto.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Trajectory\\DriverMatchDto.cs",
+              "RelativeToolTip": "ShareYourRide.Application\\DTOs\\Trajectory\\DriverMatchDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:20:33.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "StopService.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\StopService.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\StopService.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\StopService.cs",
+              "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Implementations\\StopService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:15:44.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IStopService.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\IStopService.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\IStopService.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\IStopService.cs",
+              "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Interfaces\\IStopService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T17:07:02.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "StopDto.cs",
+              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Stop\\StopDto.cs",
+              "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Stop\\StopDto.cs",
+              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Stop\\StopDto.cs",
+              "RelativeToolTip": "ShareYourRide.Application\\DTOs\\Stop\\StopDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T16:52:39.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "ShareYourRide.API\\Controllers\\AdminController.cs",
@@ -238,12 +468,11 @@
               "RelativeToolTip": "ShareYourRide.API\\Controllers\\AdminController.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAuwC4AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-20T15:52:54.235Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-20T15:52:54.235Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 12,
               "Title": "AdminService.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\AdminService.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\AdminService.cs",
@@ -256,7 +485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 16,
               "Title": "IAdminService.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\IAdminService.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\IAdminService.cs",
@@ -264,12 +493,11 @@
               "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Interfaces\\IAdminService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-20T15:49:01.181Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-20T15:49:01.181Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 27,
               "Title": "RegistrationOtpDtos.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\RegistrationOtpDtos.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\RegistrationOtpDtos.cs",
@@ -281,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 17,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\AuthService.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\AuthService.cs",
@@ -289,12 +517,11 @@
               "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Implementations\\AuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAMUAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-14T09:06:21.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-14T09:06:21.088Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 24,
               "Title": "ISmsSender.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\ISmsSender.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\ISmsSender.cs",
@@ -306,7 +533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 25,
               "Title": "ConsoleEmailSender.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\ConsoleEmailSender.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\ConsoleEmailSender.cs",
@@ -318,7 +545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 26,
               "Title": "IEmailSender.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\IEmailSender.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\IEmailSender.cs",
@@ -330,7 +557,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 20,
               "Title": "RoleSeeder.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Seed\\RoleSeeder.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Seed\\RoleSeeder.cs",
@@ -342,20 +569,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Program.cs",
-              "RelativeDocumentMoniker": "ShareYourRide.API\\Program.cs",
-              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Program.cs",
-              "RelativeToolTip": "ShareYourRide.API\\Program.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAAwE8AAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-08T16:31:29.555Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 21,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\appsettings.json",
               "RelativeDocumentMoniker": "ShareYourRide.API\\appsettings.json",
@@ -367,7 +581,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 18,
               "Title": "AuthResponseDto.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\AuthResponseDto.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\AuthResponseDto.cs",
@@ -379,7 +593,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 23,
               "Title": "ConsoleSmsSender.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\ConsoleSmsSender.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\ConsoleSmsSender.cs",
@@ -391,7 +605,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 19,
               "Title": "AdminSeeder.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Seed\\AdminSeeder.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Seed\\AdminSeeder.cs",
@@ -403,19 +617,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "TokenService.cs",
-              "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
-              "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
-              "ToolTip": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
-              "RelativeToolTip": "ShareYourRide.Infrastructure\\Services\\Implementations\\TokenService.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwAEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-14T08:08:36.068Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 29,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Repositories\\Implementations\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Repositories\\Implementations\\UnitOfWork.cs",
@@ -427,7 +629,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 22,
               "Title": "BaseEntity.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Common\\BaseEntity.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Common\\BaseEntity.cs",
@@ -439,7 +641,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 32,
               "Title": "IGenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Repositories\\Interfaces\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Repositories\\Interfaces\\IGenericRepository.cs",
@@ -451,7 +653,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 30,
               "Title": "IUnitOfWork.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Repositories\\Interfaces\\IUnitOfWork.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Repositories\\Interfaces\\IUnitOfWork.cs",
@@ -463,7 +665,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 31,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\IAuthService.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\IAuthService.cs",
@@ -475,7 +677,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 33,
               "Title": "UserProfileDto.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\User\\UserProfileDto.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\User\\UserProfileDto.cs",
@@ -487,7 +689,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 34,
               "Title": "AdminApprovalDtos.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Admin\\AdminApprovalDtos.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Admin\\AdminApprovalDtos.cs",
@@ -499,7 +701,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 35,
               "Title": "LoginDto.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\LoginDto.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\LoginDto.cs",
@@ -511,7 +713,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 28,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "ShareYourRide.API\\Controllers\\AuthController.cs",
@@ -523,7 +725,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 38,
               "Title": "PasswordResetDtos.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\PasswordResetDtos.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\PasswordResetDtos.cs",
@@ -535,7 +737,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 39,
               "Title": "OtpDtos.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\OtpDtos.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\OtpDtos.cs",
@@ -547,7 +749,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 37,
               "Title": "RegisterPersonalInfoDto.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\RegisterPersonalInfoDto.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\RegisterPersonalInfoDto.cs",
@@ -559,7 +761,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 36,
               "Title": "RegisterVehicleDto.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\DTOs\\Auth\\RegisterVehicleDto.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\DTOs\\Auth\\RegisterVehicleDto.cs",
@@ -571,7 +773,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 40,
               "Title": "ITokenService.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Services\\Interfaces\\ITokenService.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Services\\Interfaces\\ITokenService.cs",
@@ -583,7 +785,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 41,
               "Title": "VehicleImageSide.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\VehicleImageSide.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\VehicleImageSide.cs",
@@ -595,7 +797,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 42,
               "Title": "DayOfWeekType.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\DayOfWeekType.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\DayOfWeekType.cs",
@@ -607,7 +809,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 44,
               "Title": "VehicleImageConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\VehicleImageConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\VehicleImageConfiguration.cs",
@@ -619,7 +821,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 43,
               "Title": "VehicleConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\VehicleConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\VehicleConfiguration.cs",
@@ -631,7 +833,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 47,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Identity\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Identity\\ApplicationUser.cs",
@@ -643,7 +845,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 48,
               "Title": "UserStatus.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\UserStatus.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\UserStatus.cs",
@@ -655,7 +857,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 49,
               "Title": "Vehicle.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Entities\\Vehicle.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Entities\\Vehicle.cs",
@@ -667,7 +869,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 46,
               "Title": "UserConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\UserConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\UserConfiguration.cs",
@@ -679,7 +881,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 45,
               "Title": "VehicleImage.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Entities\\VehicleImage.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Entities\\VehicleImage.cs",
@@ -691,7 +893,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 51,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Repositories\\Implementations\\GenericRepository.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Repositories\\Implementations\\GenericRepository.cs",
@@ -703,7 +905,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 50,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Entities\\User.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Entities\\User.cs",
@@ -715,7 +917,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 52,
               "Title": "TrajectoryRole.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\TrajectoryRole.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\TrajectoryRole.cs",
@@ -727,7 +929,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 53,
               "Title": "OtpChannel.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\OtpChannel.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\OtpChannel.cs",
@@ -739,7 +941,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 54,
               "Title": "20260708190427__Initial.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Migrations\\20260708190427__Initial.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Migrations\\20260708190427__Initial.cs",
@@ -751,7 +953,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 57,
               "Title": "20260708185525__Inital.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Migrations\\20260708185525__Inital.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Migrations\\20260708185525__Inital.cs",
@@ -762,7 +964,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 58,
               "Title": "ShareYourRide.Application.csproj",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\ShareYourRide.Application.csproj",
               "RelativeDocumentMoniker": "ShareYourRide.Application\\ShareYourRide.Application.csproj",
@@ -774,7 +976,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 56,
               "Title": "20260708185648_ananinami.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Migrations\\20260708185648_ananinami.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Migrations\\20260708185648_ananinami.cs",
@@ -785,7 +987,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 55,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Contexts\\AppDbContext.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Contexts\\AppDbContext.cs",
@@ -797,7 +999,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 61,
               "Title": "WalletConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\WalletConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\WalletConfiguration.cs",
@@ -809,7 +1011,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 59,
               "Title": "RideApplicationConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\RideApplicationConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\RideApplicationConfiguration.cs",
@@ -821,7 +1023,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 60,
               "Title": "WalletTransactionConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\WalletTransactionConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\WalletTransactionConfiguration.cs",
@@ -833,7 +1035,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 62,
               "Title": "TrajectoryConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\TrajectoryConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\TrajectoryConfiguration.cs",
@@ -845,7 +1047,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 63,
               "Title": "StopConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Infrastructure\\Data\\Configurations\\StopConfiguration.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Infrastructure\\Data\\Configurations\\StopConfiguration.cs",
@@ -857,7 +1059,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 64,
               "Title": "RoleType.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\RoleType.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\RoleType.cs",
@@ -869,7 +1071,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 65,
               "Title": "RideApplicationStatus.cs",
               "DocumentMoniker": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\Enums\\RideApplicationStatus.cs",
               "RelativeDocumentMoniker": "ShareYourRide.Domain\\Enums\\RideApplicationStatus.cs",
