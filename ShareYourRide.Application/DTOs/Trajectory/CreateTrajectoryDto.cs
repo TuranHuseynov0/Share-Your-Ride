@@ -15,5 +15,6 @@ namespace ShareYourRide.Application.DTOs.Trajectory
         [Required] public TimeSpan Time { get; set; }
         [Required] public Guid StartStopId { get; set; }
         [Required] public Guid EndStopId { get; set; }
+        public bool SaveAsTemplate { get; set; } = false;
     }
 }

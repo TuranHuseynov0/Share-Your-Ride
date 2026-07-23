@@ -34,5 +34,28 @@ namespace ShareYourRide.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpPost("from-template")]
+        public async Task<IActionResult> CreateFromTemplate(CreateFromTemplateDto dto)
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            try
+            {
+                var result = await _trajectoryService.CreateFromTemplateAsync(userId, dto);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("templates")]
+        public async Task<IActionResult> GetTemplates()
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var result = await _trajectoryService.GetMyTemplatesAsync(userId);
+            return Ok(result);
+        }
     }
 }

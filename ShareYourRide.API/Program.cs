@@ -62,6 +62,7 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<IStopService, ShareYourRide.Infrastructure.Services.Implementations.StopService>();
             builder.Services.AddScoped<ITrajectoryService, ShareYourRide.Infrastructure.Services.Implementations.TrajectoryService>();
             builder.Services.AddScoped<IAdminService, ShareYourRide.Infrastructure.Services.Implementations.AdminService>();
+            builder.Services.AddScoped<IRideApplicationService, ShareYourRide.Infrastructure.Services.Implementations.RideApplicationService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

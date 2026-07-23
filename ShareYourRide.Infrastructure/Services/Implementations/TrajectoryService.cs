@@ -1,4 +1,5 @@
-﻿using ShareYourRide.Application.DTOs.Trajectory;
+﻿using ShareYourRide.Application.DTOs.Template;
+using ShareYourRide.Application.DTOs.Trajectory;
 using ShareYourRide.Domain.Entities;
 using ShareYourRide.Domain.Enums;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
@@ -35,7 +36,8 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 Day = (DayOfWeekType)dto.DayOfWeek,
                 Time = dto.Time,
                 StartStopId = dto.StartStopId,
-                EndStopId = dto.EndStopId
+                EndStopId = dto.EndStopId,
+                IsTemplate = dto.SaveAsTemplate,
             };
 
             await _unitOfWork.Trajectories.AddAsync(trajectory);
@@ -91,6 +93,46 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 .OrderByDescending(m => m.CommonStopsCount)
                 .ThenBy(m => Math.Abs((m.DriverTime - passengerTrajectory.Time).TotalMinutes))
                 .ToList();
+        }
+
+        public async Task<CreateTrajectoryResponseDto> CreateFromTemplateAsync(Guid userId, CreateFromTemplateDto dto)
+        {
+            var template = await _unitOfWork.Trajectories.GetByIdAsync(dto.TemplateTrajectoryId)
+                ?? throw new InvalidOperationException("Şablon tapılmadı.");
+
+            if (template.UserId != userId || !template.IsTemplate)
+                throw new InvalidOperationException("Bu şablon sizə aid deyil.");
+
+            return await CreateAsync(userId, new CreateTrajectoryDto
+            {
+                Role = template.Role,
+                DayOfWeek = dto.Day,
+                Time = dto.Time,
+                StartStopId = template.StartStopId,
+                EndStopId = template.EndStopId,
+                SaveAsTemplate = false
+            });
+        }
+
+        public async Task<IReadOnlyList<TemplateDto>> GetMyTemplatesAsync(Guid userId)
+        {
+            var templates = await _unitOfWork.Trajectories.FindAsync(t => t.UserId == userId && t.IsTemplate);
+            var result = new List<TemplateDto>();
+
+            foreach (var t in templates)
+            {
+                var startStop = await _unitOfWork.Stops.GetByIdAsync(t.StartStopId);
+                var endStop = await _unitOfWork.Stops.GetByIdAsync(t.EndStopId);
+
+                result.Add(new TemplateDto
+                {
+                    Id = t.Id,
+                    StartStopName = startStop?.Name ?? "N/A",
+                    EndStopName = endStop?.Name ?? "N/A"
+                });
+            }
+
+            return result;
         }
     }
 }
