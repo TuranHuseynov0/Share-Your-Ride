@@ -51,12 +51,22 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
         public async Task ApproveUserAsync(ApproveUserDto dto)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(dto.UserId)
-                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
+        ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
 
             user.Status = UserStatus.Approved;
             user.RejectReason = null;
-
             _unitOfWork.Users.Update(user);
+
+            var existingWallet = await _unitOfWork.Wallets.SingleOrDefaultAsync(w => w.UserId == user.Id);
+            if (existingWallet == null)
+            {
+                await _unitOfWork.Wallets.AddAsync(new Domain.Entities.Wallet
+                {
+                    UserId = user.Id,
+                    Balance = 0
+                });
+            }
+
             await _unitOfWork.SaveChangesAsync();
         }
 

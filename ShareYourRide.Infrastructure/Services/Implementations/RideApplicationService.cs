@@ -1,4 +1,6 @@
-﻿using ShareYourRide.Application.DTOs.RideApplication;
+﻿using Microsoft.Extensions.Configuration;
+using ShareYourRide.Application.DTOs.RideApplication;
+using ShareYourRide.Domain.Entities;
 using ShareYourRide.Domain.Enums;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
 using ShareYourRide.Infrastructure.Services.Interfaces;
@@ -13,10 +15,12 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
     public class RideApplicationService : IRideApplicationService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly decimal _fixedFare;
 
-        public RideApplicationService(IUnitOfWork unitOfWork)
+        public RideApplicationService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _fixedFare = decimal.Parse(configuration["RideSettings:FixedFareAzn"] ?? "3");
         }
 
         public async Task<RideApplicationDto> ApplyAsync(Guid passengerUserId, CreateRideApplicationDto dto)
@@ -55,8 +59,41 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
         public async Task AcceptAsync(Guid driverUserId, Guid applicationId)
         {
             var application = await GetOwnedApplicationAsync(driverUserId, applicationId);
+
+            var passengerWallet = await _unitOfWork.Wallets.SingleOrDefaultAsync(w => w.UserId == application.PassengerUserId)
+                ?? throw new InvalidOperationException("Sərnişinin balans hesabı tapılmadı.");
+
+            var driverWallet = await _unitOfWork.Wallets.SingleOrDefaultAsync(w => w.UserId == driverUserId)
+                ?? throw new InvalidOperationException("Sürücünün balans hesabı tapılmadı.");
+
+            if (passengerWallet.Balance < _fixedFare)
+                throw new InvalidOperationException("Sərnişinin balansı kifayət deyil.");
+
+            passengerWallet.Balance -= _fixedFare;
+            driverWallet.Balance += _fixedFare;
+
+            _unitOfWork.Wallets.Update(passengerWallet);
+            _unitOfWork.Wallets.Update(driverWallet);
+
+            await _unitOfWork.WalletTransactions.AddAsync(new WalletTransaction
+            {
+                WalletId = passengerWallet.Id,
+                Amount = _fixedFare,
+                Type = TransactionType.RidePayment,
+                RelatedRideApplicationId = application.Id
+            });
+
+            await _unitOfWork.WalletTransactions.AddAsync(new WalletTransaction
+            {
+                WalletId = driverWallet.Id,
+                Amount = _fixedFare,
+                Type = TransactionType.RideEarning,
+                RelatedRideApplicationId = application.Id
+            });
+
             application.Status = RideApplicationStatus.Approved;
             _unitOfWork.RideApplications.Update(application);
+
             await _unitOfWork.SaveChangesAsync();
         }
 

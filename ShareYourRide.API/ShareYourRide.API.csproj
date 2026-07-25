@@ -22,4 +22,8 @@
     <ProjectReference Include="..\ShareYourRide.Infrastructure\ShareYourRide.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

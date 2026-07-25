@@ -63,6 +63,8 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<ITrajectoryService, ShareYourRide.Infrastructure.Services.Implementations.TrajectoryService>();
             builder.Services.AddScoped<IAdminService, ShareYourRide.Infrastructure.Services.Implementations.AdminService>();
             builder.Services.AddScoped<IRideApplicationService, ShareYourRide.Infrastructure.Services.Implementations.RideApplicationService>();
+            builder.Services.AddScoped<IWalletService, ShareYourRide.Infrastructure.Services.Implementations.WalletService>();
+            builder.Services.AddScoped<IFileStorageService, ShareYourRide.Infrastructure.Services.Implementations.LocalFileStorageService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -96,12 +98,10 @@ namespace ShareYourRide.API
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
