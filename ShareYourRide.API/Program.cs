@@ -65,6 +65,7 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<IRideApplicationService, ShareYourRide.Infrastructure.Services.Implementations.RideApplicationService>();
             builder.Services.AddScoped<IWalletService, ShareYourRide.Infrastructure.Services.Implementations.WalletService>();
             builder.Services.AddScoped<IFileStorageService, ShareYourRide.Infrastructure.Services.Implementations.LocalFileStorageService>();
+            builder.Services.AddScoped<IEmailSender, ShareYourRide.Infrastructure.Services.Implementations.SmtpEmailSender>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj": {}
+    "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj": {
+    "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj",
         "projectName": "ShareYourRide.Domain",
-        "projectPath": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj",
+        "projectPath": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj",
         "packagesPath": "C:\\Users\\Victus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\obj\\",
+        "outputPath": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

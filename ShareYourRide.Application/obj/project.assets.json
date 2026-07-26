@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "FluentValidation/12.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore/8.0.28": {
         "type": "package",
         "dependencies": {
@@ -212,6 +225,21 @@
     }
   },
   "libraries": {
+    "FluentValidation/12.1.1": {
+      "sha512": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw==",
+      "type": "package",
+      "path": "fluentvalidation/12.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.12.1.1.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net8.0/FluentValidation.dll",
+        "lib/net8.0/FluentValidation.xml"
+      ]
+    },
     "Microsoft.EntityFrameworkCore/8.0.28": {
       "sha512": "rC28OvTXi/6+C8cisqZ/dr69aP8d0suvkFkGu2dBHa4UFwPZVt9cqni4pYwp9Hd3CuJ+NRDCn7YtwSexoBn/Hw==",
       "type": "package",
@@ -572,6 +600,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "FluentValidation >= 12.1.1",
       "Microsoft.EntityFrameworkCore >= 8.0.28",
       "ShareYourRide.Domain >= 1.0.0"
     ]
@@ -583,11 +612,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\ShareYourRide.Application.csproj",
+      "projectUniqueName": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Application\\ShareYourRide.Application.csproj",
       "projectName": "ShareYourRide.Application",
-      "projectPath": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\ShareYourRide.Application.csproj",
+      "projectPath": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Application\\ShareYourRide.Application.csproj",
       "packagesPath": "C:\\Users\\Victus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Application\\obj\\",
+      "outputPath": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -608,8 +637,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj": {
-              "projectPath": "C:\\Users\\Victus\\source\\repos\\ShareYourRide\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj"
+            "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj": {
+              "projectPath": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Domain\\ShareYourRide.Domain.csproj"
             }
           }
         }
@@ -630,6 +659,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[12.1.1, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[8.0.28, )"

@@ -27,8 +27,8 @@ namespace ShareYourRide.Application.DTOs.Auth
     public class RegisterPersonalInfoResponseDto
     {
         public Guid UserId { get; set; }
-        public string MaskedPhoneNumber { get; set; } = default!;
+        public string MaskedEmail { get; set; } = default!;
         public int OtpExpirySeconds { get; set; }
-        public bool RequiresVehicleInfo { get; set; }   // Role == Driver isə true
+        public bool RequiresVehicleInfo { get; set; }
     }
 }

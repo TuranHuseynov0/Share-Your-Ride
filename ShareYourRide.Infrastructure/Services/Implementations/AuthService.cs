@@ -67,12 +67,12 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             await _unitOfWork.Users.AddAsync(domainUser);
             await _unitOfWork.SaveChangesAsync();
 
-            await SendPhoneOtpAsync(appUser);
+            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");   // DƏYİŞDİ
 
             return new RegisterPersonalInfoResponseDto
             {
                 UserId = domainUser.Id,
-                MaskedPhoneNumber = MaskPhone(dto.PhoneNumber),
+                MaskedEmail = MaskEmail(dto.Email),   // DƏYİŞDİ
                 OtpExpirySeconds = 60,
                 RequiresVehicleInfo = dto.Role == TrajectoryRole.Driver
             };
@@ -112,11 +112,11 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             var appUser = await _userManager.FindByIdAsync(domainUser.ApplicationUserId.ToString())
                 ?? throw new InvalidOperationException("Hesab tapılmadı.");
 
-            var isValid = await _userManager.VerifyChangePhoneNumberTokenAsync(appUser, dto.Code, appUser.PhoneNumber!);
+            var isValid = await _userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultEmailProvider, "EmailConfirmation", dto.Code);
             if (!isValid)
                 throw new InvalidOperationException("Kod yanlışdır və ya vaxtı bitib.");
 
-            appUser.PhoneNumberConfirmed = true;
+            appUser.EmailConfirmed = true;   // DƏYİŞDİ (əvvəl PhoneNumberConfirmed idi)
             await _userManager.UpdateAsync(appUser);
 
             return await BuildAuthResponseAsync(appUser, domainUser);
@@ -130,7 +130,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             var appUser = await _userManager.FindByIdAsync(domainUser.ApplicationUserId.ToString())
                 ?? throw new InvalidOperationException("Hesab tapılmadı.");
 
-            await SendPhoneOtpAsync(appUser);
+            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");   // DƏYİŞDİ
         }
 
         public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
@@ -142,8 +142,8 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (!passwordValid)
                 throw new InvalidOperationException("Email və ya şifrə yanlışdır.");
 
-            if (!appUser.PhoneNumberConfirmed)
-                throw new InvalidOperationException("Telefon nömrəsi təsdiqlənməyib.");
+            if (!appUser.EmailConfirmed)   // DƏYİŞDİ
+                throw new InvalidOperationException("Email təsdiqlənməyib.");
 
             var domainUser = await _unitOfWork.Users.SingleOrDefaultAsync(u => u.ApplicationUserId == appUser.Id)
                 ?? throw new InvalidOperationException("Profil tapılmadı.");
@@ -159,7 +159,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (dto.Channel == OtpChannel.Phone)
                 await SendPhoneOtpAsync(appUser);
             else
-                await SendEmailOtpAsync(appUser);
+                await SendEmailOtpAsync(appUser, "ResetPassword", "Şifrə sıfırlama kodu");   // DƏYİŞDİ (parametrli çağırış)
         }
 
         public async Task ResetPasswordAsync(ResetPasswordDto dto)
@@ -206,10 +206,10 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             await _smsSender.SendAsync(appUser.PhoneNumber!, $"Share-Your-Ride təsdiq kodu: {code}");
         }
 
-        private async Task SendEmailOtpAsync(ApplicationUser appUser)
+        private async Task SendEmailOtpAsync(ApplicationUser appUser, string purpose, string subject)
         {
-            var code = await _userManager.GenerateUserTokenAsync(appUser, TokenOptions.DefaultEmailProvider, "ResetPassword");
-            await _emailSender.SendAsync(appUser.Email!, "Şifrə sıfırlama kodu", $"Kodunuz: {code}");
+            var code = await _userManager.GenerateUserTokenAsync(appUser, TokenOptions.DefaultEmailProvider, purpose);
+            await _emailSender.SendAsync(appUser.Email!, subject, $"Kodunuz: {code}");
         }
 
         private async Task<ApplicationUser?> FindByContactAsync(string contact, OtpChannel channel) =>
@@ -217,7 +217,13 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 ? await _userManager.FindByEmailAsync(contact)
                 : await _userManager.Users.SingleOrDefaultAsync(u => u.PhoneNumber == contact);
 
-        private static string MaskPhone(string phone) =>
-            phone.Length <= 4 ? phone : $"{phone[..^4].Replace(phone[4..^4], new string('*', phone.Length - 8))}{phone[^4..]}";
+        private static string MaskEmail(string email)
+        {
+            var atIndex = email.IndexOf('@');
+            if (atIndex <= 1) return email;
+
+            var visibleChars = Math.Min(2, atIndex);
+            return $"{email[..visibleChars]}{new string('*', atIndex - visibleChars)}{email[atIndex..]}";
+        }
     }
 }
