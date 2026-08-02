@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShareYourRide.Domain.Common;
+using ShareYourRide.Domain.Entities;
 using ShareYourRide.Infrastructure.Data;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
 using System;
@@ -16,6 +17,7 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
         private readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
 
+        public IGenericRepository<TrajectoryWaypoint> TrajectoryWaypoints => new GenericRepository<TrajectoryWaypoint>(_context);
         public GenericRepository(AppDbContext context, DbSet<T> dbSet)
         {
             _context = context;

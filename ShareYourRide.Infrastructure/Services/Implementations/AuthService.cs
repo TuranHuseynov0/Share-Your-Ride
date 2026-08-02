@@ -67,7 +67,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             await _unitOfWork.Users.AddAsync(domainUser);
             await _unitOfWork.SaveChangesAsync();
 
-            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");   // DƏYİŞDİ
+            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");  // DƏYİŞDİ
 
             return new RegisterPersonalInfoResponseDto
             {
@@ -142,7 +142,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (!passwordValid)
                 throw new InvalidOperationException("Email və ya şifrə yanlışdır.");
 
-            if (!appUser.EmailConfirmed)   // DƏYİŞDİ
+            if (!appUser.EmailConfirmed)
                 throw new InvalidOperationException("Email təsdiqlənməyib.");
 
             var domainUser = await _unitOfWork.Users.SingleOrDefaultAsync(u => u.ApplicationUserId == appUser.Id)

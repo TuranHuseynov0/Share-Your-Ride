@@ -36,6 +36,9 @@ namespace ShareYourRide.Infrastructure.Data.Configurations
                 .WithOne(t => t.User)
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(u => u.Bio).HasMaxLength(300);
+            builder.Property(u => u.Rating).HasColumnType("decimal(3,2)");
         }
     }
 }

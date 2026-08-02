@@ -15,7 +15,14 @@ namespace ShareYourRide.Application.DTOs.User
         public string PhoneNumber { get; set; } = default!;
         public string MaskedFinCode { get; set; } = default!;
         public string? ProfileImagePath { get; set; }
+        public string? Bio { get; set; }
         public Domain.Enums.UserStatus Status { get; set; }
         public bool HasVehicle { get; set; }
+
+        // YENİ
+        public decimal Rating { get; set; }
+        public int MemberSinceYear { get; set; }
+        public int CompletedRideCount { get; set; }
+        public decimal CancellationRatePercent { get; set; }
     }
 }

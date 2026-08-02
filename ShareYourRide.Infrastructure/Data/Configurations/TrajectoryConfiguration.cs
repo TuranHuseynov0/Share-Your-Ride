@@ -31,6 +31,8 @@ namespace ShareYourRide.Infrastructure.Data.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(t => new { t.UserId, t.Day, t.Role });
+
+            builder.HasIndex(t => t.ScheduleGroupId);
         }
     }
 }

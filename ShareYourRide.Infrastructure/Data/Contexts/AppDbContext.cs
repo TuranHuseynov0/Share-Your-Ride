@@ -24,6 +24,7 @@ namespace ShareYourRide.Infrastructure.Data
         public DbSet<RideApplication> RideApplications => Set<RideApplication>();
         public DbSet<Wallet> Wallets => Set<Wallet>();
         public DbSet<WalletTransaction> WalletTransactions => Set<WalletTransaction>();
+        public DbSet<TrajectoryWaypoint> TrajectoryWaypoints => Set<TrajectoryWaypoint>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

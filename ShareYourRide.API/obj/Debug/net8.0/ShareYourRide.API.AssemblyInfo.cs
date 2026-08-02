@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("0227f44b-9fe0-4620-8d23-5e632b8c8f34")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShareYourRide.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed710d6cc8191e7fa8cc1e8590862059af3811f4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62e488245d7dfd132664e2d0fd86c78a6926381d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShareYourRide.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShareYourRide.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

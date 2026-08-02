@@ -1,4 +1,5 @@
 ﻿using ShareYourRide.Domain.Common;
+using ShareYourRide.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace ShareYourRide.Infrastructure.Repositories.Interfaces
         void Update(T entity);
         void Remove(T entity);
         IQueryable<T> Query();
+        IGenericRepository<TrajectoryWaypoint> TrajectoryWaypoints { get; }
     }
 }

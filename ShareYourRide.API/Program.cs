@@ -22,7 +22,13 @@ namespace ShareYourRide.API
             builder.Services.AddControllers();
 
             builder.Services.AddDbContext<AppDbContext>(opt =>
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            opt.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                sqlOptions => sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    errorNumbersToAdd: null)
+            ));
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
             {
@@ -64,8 +70,9 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<IAdminService, ShareYourRide.Infrastructure.Services.Implementations.AdminService>();
             builder.Services.AddScoped<IRideApplicationService, ShareYourRide.Infrastructure.Services.Implementations.RideApplicationService>();
             builder.Services.AddScoped<IWalletService, ShareYourRide.Infrastructure.Services.Implementations.WalletService>();
-            builder.Services.AddScoped<IFileStorageService, ShareYourRide.Infrastructure.Services.Implementations.LocalFileStorageService>();
+            builder.Services.AddScoped<IFileStorageService, AzureBlobStorageService>();
             builder.Services.AddScoped<IEmailSender, ShareYourRide.Infrastructure.Services.Implementations.SmtpEmailSender>();
+            builder.Services.AddScoped<IUserService, ShareYourRide.Infrastructure.Services.Implementations.UserService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -97,6 +104,9 @@ namespace ShareYourRide.API
             });
 
             var app = builder.Build();
+
+            app.UseDeveloperExceptionPage();   // MÜVƏQQƏTİ
+
 
             // Configure the HTTP request pipeline.
             app.UseSwagger();

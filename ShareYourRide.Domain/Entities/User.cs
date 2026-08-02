@@ -10,13 +10,17 @@ namespace ShareYourRide.Domain.Entities
 {
     public class User : BaseEntity
     {
-        public Guid ApplicationUserId { get; set; }   // Identity ApplicationUser-ə FK (Guid)
+        public Guid ApplicationUserId { get; set; }
 
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public DateTime BirthDate { get; set; }
         public string FinCode { get; set; } = default!;
         public string? ProfileImagePath { get; set; }
+
+        // YENİ
+        public string? Bio { get; set; }
+        public decimal Rating { get; set; } = 0;
 
         public UserStatus Status { get; set; } = UserStatus.Pending;
         public string? RejectReason { get; set; }
