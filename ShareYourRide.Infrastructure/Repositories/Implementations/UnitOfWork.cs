@@ -21,6 +21,10 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
         public IGenericRepository<RideApplication> RideApplications { get; }
         public IGenericRepository<Wallet> Wallets { get; }
         public IGenericRepository<WalletTransaction> WalletTransactions { get; }
+        public IGenericRepository<VehicleBrand> VehicleBrands { get; }
+        public IGenericRepository<VehicleModel> VehicleModels { get; }
+        public IGenericRepository<VehicleColor> VehicleColors { get; }
+        public IGenericRepository<FaqItem> FaqItems { get; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -33,6 +37,10 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
             RideApplications = new GenericRepository<RideApplication>(context);
             Wallets = new GenericRepository<Wallet>(context);
             WalletTransactions = new GenericRepository<WalletTransaction>(context);
+            VehicleBrands = new GenericRepository<VehicleBrand>(context);
+            VehicleModels = new GenericRepository<VehicleModel>(context);
+            VehicleColors = new GenericRepository<VehicleColor>(context);
+            FaqItems = new GenericRepository<FaqItem>(context);
         }
 
         public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();

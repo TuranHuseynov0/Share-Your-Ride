@@ -18,6 +18,7 @@ namespace ShareYourRide.Application.DTOs.User
         public string? Bio { get; set; }
         public Domain.Enums.UserStatus Status { get; set; }
         public bool HasVehicle { get; set; }
+        public string FullName => $"{FirstName}".Trim();
 
         // YENİ
         public decimal Rating { get; set; }

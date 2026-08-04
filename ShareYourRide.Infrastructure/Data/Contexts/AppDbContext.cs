@@ -25,6 +25,10 @@ namespace ShareYourRide.Infrastructure.Data
         public DbSet<Wallet> Wallets => Set<Wallet>();
         public DbSet<WalletTransaction> WalletTransactions => Set<WalletTransaction>();
         public DbSet<TrajectoryWaypoint> TrajectoryWaypoints => Set<TrajectoryWaypoint>();
+        public DbSet<VehicleBrand> VehicleBrands => Set<VehicleBrand>();
+        public DbSet<VehicleModel> VehicleModels => Set<VehicleModel>();
+        public DbSet<VehicleColor> VehicleColors => Set<VehicleColor>();
+        public DbSet<FaqItem> FaqItems => Set<FaqItem>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

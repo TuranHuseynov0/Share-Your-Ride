@@ -30,5 +30,7 @@ namespace ShareYourRide.Application.DTOs.Auth
         public string MaskedEmail { get; set; } = default!;
         public int OtpExpirySeconds { get; set; }
         public bool RequiresVehicleInfo { get; set; }
+        public string Token { get; set; } = default!;
+        public DateTime TokenExpiresAt { get; set; }
     }
 }

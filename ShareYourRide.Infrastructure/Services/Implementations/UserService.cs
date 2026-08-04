@@ -70,6 +70,9 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (!string.IsNullOrWhiteSpace(dto.LastName))
                 user.LastName = dto.LastName;
 
+            if (!string.IsNullOrWhiteSpace(dto.ProfileImagePath))
+                user.ProfileImagePath = dto.ProfileImagePath;
+
             if (dto.Bio != null)
                 user.Bio = dto.Bio;
 

@@ -13,5 +13,6 @@ namespace ShareYourRide.Application.DTOs.User
         [MaxLength(100)] public string? LastName { get; set; }
         [MaxLength(300)] public string? Bio { get; set; }
         [Phone] public string? PhoneNumber { get; set; }
+        public string? ProfileImagePath { get; set; }   // YENİ
     }
 }

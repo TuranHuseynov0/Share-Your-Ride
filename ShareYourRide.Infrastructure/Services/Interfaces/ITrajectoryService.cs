@@ -13,5 +13,6 @@ namespace ShareYourRide.Infrastructure.Services.Interfaces
         Task<CreateTrajectoryResponseDto> CreateAsync(Guid userId, CreateTrajectoryDto dto);
         Task<CreateTrajectoryResponseDto> CreateFromTemplateAsync(Guid userId, CreateFromTemplateDto dto);
         Task<IReadOnlyList<TemplateDto>> GetMyTemplatesAsync(Guid userId);
+        Task<IReadOnlyList<TrajectoryDto>> GetMyTrajectoriesAsync(Guid userId);
     }
 }

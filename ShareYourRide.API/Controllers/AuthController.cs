@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShareYourRide.Application.DTOs.Auth;
 using ShareYourRide.Infrastructure.Services.Interfaces;
+using System.Security.Claims;
 
 namespace ShareYourRide.API.Controllers
 {
@@ -31,11 +33,13 @@ namespace ShareYourRide.API.Controllers
         }
 
         [HttpPost("register/vehicle-info")]
+        [Authorize]
         public async Task<IActionResult> RegisterVehicleInfo(RegisterVehicleDto dto)
         {
             try
             {
-                await _authService.RegisterVehicleInfoAsync(dto);
+                var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                await _authService.RegisterVehicleInfoAsync(currentUserId, dto);
                 return Ok();
             }
             catch (InvalidOperationException ex)

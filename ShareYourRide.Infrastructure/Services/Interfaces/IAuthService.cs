@@ -16,5 +16,6 @@ namespace ShareYourRide.Infrastructure.Services.Interfaces
         Task<AuthResponseDto> LoginAsync(LoginDto dto);
         Task ForgotPasswordAsync(ForgotPasswordDto dto);
         Task ResetPasswordAsync(ResetPasswordDto dto);
+        Task RegisterVehicleInfoAsync(Guid userId, RegisterVehicleDto dto);
     }
 }

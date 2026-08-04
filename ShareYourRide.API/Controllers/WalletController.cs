@@ -29,7 +29,26 @@ namespace ShareYourRide.API.Controllers
             try
             {
                 await _walletService.TopUpAsync(CurrentUserId, dto);
-                return Ok(new { message = "Wallet topped up successfully." });
+                var balance = await _walletService.GetBalanceAsync(CurrentUserId);
+                return Ok(balance);   // { balance: ... } — frontend həmişə eyni formatı alır
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Balans artırılarkən xəta baş verdi." });
+            }
+        }
+
+        [HttpGet("balance")]
+        public async Task<IActionResult> GetBalance()
+        {
+            try
+            {
+                var result = await _walletService.GetBalanceAsync(CurrentUserId);
+                return Ok(result);
             }
             catch (InvalidOperationException ex)
             {
@@ -37,18 +56,18 @@ namespace ShareYourRide.API.Controllers
             }
         }
 
-        [HttpGet("balance")]
-        public async Task<IActionResult> GetBalance()
-        {
-            var result = await _walletService.GetBalanceAsync(CurrentUserId);
-            return Ok(result);
-        }
-
         [HttpGet("transactions")]
         public async Task<IActionResult> GetTransactions()
         {
-            var result = await _walletService.GetTransactionsAsync(CurrentUserId);
-            return Ok(result);
+            try
+            {
+                var result = await _walletService.GetTransactionsAsync(CurrentUserId);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

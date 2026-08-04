@@ -57,5 +57,13 @@ namespace ShareYourRide.API.Controllers
             var result = await _trajectoryService.GetMyTemplatesAsync(userId);
             return Ok(result);
         }
+
+        [HttpGet("my")]
+        public async Task<IActionResult> GetMy()
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var result = await _trajectoryService.GetMyTrajectoriesAsync(userId);
+            return Ok(result);
+        }
     }
 }

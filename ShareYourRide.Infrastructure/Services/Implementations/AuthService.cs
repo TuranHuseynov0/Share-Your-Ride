@@ -50,7 +50,12 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
 
             var identityResult = await _userManager.CreateAsync(appUser, dto.Password);
             if (!identityResult.Succeeded)
+            {
+                if (identityResult.Errors.Any(e => e.Code is "DuplicateUserName" or "DuplicateEmail"))
+                    throw new InvalidOperationException("Bu email artıq qeydiyyatdan keçib.");
+
                 throw new InvalidOperationException(string.Join(", ", identityResult.Errors.Select(e => e.Description)));
+            }
 
             await _userManager.AddToRoleAsync(appUser, nameof(RoleType.User));
 
@@ -67,14 +72,18 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             await _unitOfWork.Users.AddAsync(domainUser);
             await _unitOfWork.SaveChangesAsync();
 
-            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");  // DƏYİŞDİ
+            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");
+
+            var (registrationToken, expiresAt) = _tokenService.GenerateToken(domainUser.Id, dto.Email, nameof(RoleType.User));
 
             return new RegisterPersonalInfoResponseDto
             {
                 UserId = domainUser.Id,
-                MaskedEmail = MaskEmail(dto.Email),   // DƏYİŞDİ
+                MaskedEmail = MaskEmail(dto.Email),
                 OtpExpirySeconds = 60,
-                RequiresVehicleInfo = dto.Role == TrajectoryRole.Driver
+                RequiresVehicleInfo = dto.Role == TrajectoryRole.Driver,
+                Token = registrationToken,
+                TokenExpiresAt = expiresAt
             };
         }
 
@@ -105,22 +114,37 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
         }
 
         public async Task<AuthResponseDto> VerifyRegistrationOtpAsync(VerifyRegistrationOtpDto dto)
+{
+    var domainUser = await _unitOfWork.Users.GetByIdAsync(dto.UserId)
+        ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
+
+    var appUser = await _userManager.FindByIdAsync(domainUser.ApplicationUserId.ToString())
+        ?? throw new InvalidOperationException("Hesab tapılmadı.");
+
+    var isValid = await _userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultEmailProvider, "EmailConfirmation", dto.Code);
+    if (!isValid)
+        throw new InvalidOperationException("Kod yanlışdır və ya vaxtı bitib.");
+
+    appUser.EmailConfirmed = true;
+    await _userManager.UpdateAsync(appUser);
+
+    // YENİ: sərnişini avtomatik təsdiqlə, sürücünü admin-ə saxla
+    var hasVehicle = (await _unitOfWork.Vehicles.FindAsync(v => v.UserId == domainUser.Id)).Any();
+    if (!hasVehicle && domainUser.Status == UserStatus.Pending)
+    {
+        domainUser.Status = UserStatus.Approved;
+        _unitOfWork.Users.Update(domainUser);
+
+        var existingWallet = await _unitOfWork.Wallets.SingleOrDefaultAsync(w => w.UserId == domainUser.Id);
+        if (existingWallet == null)
         {
-            var domainUser = await _unitOfWork.Users.GetByIdAsync(dto.UserId)
-                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
-
-            var appUser = await _userManager.FindByIdAsync(domainUser.ApplicationUserId.ToString())
-                ?? throw new InvalidOperationException("Hesab tapılmadı.");
-
-            var isValid = await _userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultEmailProvider, "EmailConfirmation", dto.Code);
-            if (!isValid)
-                throw new InvalidOperationException("Kod yanlışdır və ya vaxtı bitib.");
-
-            appUser.EmailConfirmed = true;   // DƏYİŞDİ (əvvəl PhoneNumberConfirmed idi)
-            await _userManager.UpdateAsync(appUser);
-
-            return await BuildAuthResponseAsync(appUser, domainUser);
+            await _unitOfWork.Wallets.AddAsync(new Wallet { UserId = domainUser.Id, Balance = 0 });
         }
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    return await BuildAuthResponseAsync(appUser, domainUser);
+}
 
         public async Task ResendRegistrationOtpAsync(ResendRegistrationOtpDto dto)
         {
@@ -180,7 +204,6 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 throw new InvalidOperationException(string.Join(", ", result.Errors.Select(e => e.Description)));
         }
 
-        // ---- daxili köməkçi metodlar ----
 
         private async Task<AuthResponseDto> BuildAuthResponseAsync(ApplicationUser appUser, User domainUser)
         {
@@ -224,6 +247,33 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
 
             var visibleChars = Math.Min(2, atIndex);
             return $"{email[..visibleChars]}{new string('*', atIndex - visibleChars)}{email[atIndex..]}";
+        }
+
+
+        public async Task RegisterVehicleInfoAsync(Guid userId, RegisterVehicleDto dto)
+        {
+            var domainUser = await _unitOfWork.Users.GetByIdAsync(userId)
+                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
+
+            var vehicle = new Vehicle
+            {
+                UserId = domainUser.Id,
+                Brand = dto.Brand,
+                Model = dto.Model,
+                Color = dto.Color,
+                Year = dto.Year,
+                PlateNumber = dto.PlateNumber,
+                Images = new List<VehicleImage>
+        {
+            new() { ImagePath = dto.FrontImagePath, Side = VehicleImageSide.Front },
+            new() { ImagePath = dto.BackImagePath, Side = VehicleImageSide.Back },
+            new() { ImagePath = dto.LeftImagePath, Side = VehicleImageSide.Left },
+            new() { ImagePath = dto.RightImagePath, Side = VehicleImageSide.Right }
+        }
+            };
+
+            await _unitOfWork.Vehicles.AddAsync(vehicle);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

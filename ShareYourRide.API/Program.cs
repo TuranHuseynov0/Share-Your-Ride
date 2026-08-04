@@ -30,6 +30,15 @@ namespace ShareYourRide.API
                     errorNumbersToAdd: null)
             ));
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowTester", policy =>
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .WithExposedHeaders("X-Session-Id"));
+            });
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -73,6 +82,7 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<IFileStorageService, AzureBlobStorageService>();
             builder.Services.AddScoped<IEmailSender, ShareYourRide.Infrastructure.Services.Implementations.SmtpEmailSender>();
             builder.Services.AddScoped<IUserService, ShareYourRide.Infrastructure.Services.Implementations.UserService>();
+            builder.Services.AddScoped<IVehicleCatalogService, ShareYourRide.Infrastructure.Services.Implementations.VehicleCatalogService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -116,7 +126,9 @@ namespace ShareYourRide.API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors("AllowTester");
             app.MapControllers();
+            app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 
             using (var scope = app.Services.CreateScope())
@@ -130,6 +142,8 @@ namespace ShareYourRide.API
 
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 await ShareYourRide.Infrastructure.Data.Seed.StopSeeder.SeedStopAsync(dbContext);
+
+                await ShareYourRide.Infrastructure.Data.Seed.VehicleCatalogSeeder.SeedAsync(dbContext);
             }
 
             app.Run();

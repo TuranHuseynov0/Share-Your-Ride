@@ -21,6 +21,18 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
+        private static DayOfWeekType MapDayOfWeek(DayOfWeek day) => day switch
+        {
+            DayOfWeek.Monday => DayOfWeekType.Monday,
+            DayOfWeek.Tuesday => DayOfWeekType.Tuesday,
+            DayOfWeek.Wednesday => DayOfWeekType.Wednesday,
+            DayOfWeek.Thursday => DayOfWeekType.Thursday,
+            DayOfWeek.Friday => DayOfWeekType.Friday,
+            DayOfWeek.Saturday => DayOfWeekType.Saturday,
+            DayOfWeek.Sunday => DayOfWeekType.Sunday,
+            _ => throw new InvalidOperationException("Naməlum gün.")
+        };
+
         public async Task<CreateTrajectoryResponseDto> CreateAsync(Guid userId, CreateTrajectoryDto dto)
         {
             var user = await _unitOfWork.Users.GetByIdAsync(userId)
@@ -33,7 +45,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             {
                 UserId = userId,
                 Role = dto.Role,
-                Day = (DayOfWeekType)dto.DayOfWeek,
+                Day = MapDayOfWeek(dto.DayOfWeek),
                 Time = dto.Time,
                 StartStopId = dto.StartStopId,
                 EndStopId = dto.EndStopId,
@@ -133,6 +145,32 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             }
 
             return result;
+        }
+
+        public async Task<IReadOnlyList<TrajectoryDto>> GetMyTrajectoriesAsync(Guid userId)
+        {
+            var trajectories = await _unitOfWork.Trajectories.FindAsync(t => t.UserId == userId && !t.IsTemplate);
+            var result = new List<TrajectoryDto>();
+
+            foreach (var t in trajectories)
+            {
+                var startStop = await _unitOfWork.Stops.GetByIdAsync(t.StartStopId);
+                var endStop = await _unitOfWork.Stops.GetByIdAsync(t.EndStopId);
+
+                result.Add(new TrajectoryDto
+                {
+                    Id = t.Id,
+                    Role = t.Role,
+                    Day = t.Day,
+                    Time = t.Time,
+                    StartStopName = startStop?.Name ?? "N/A",
+                    EndStopName = endStop?.Name ?? "N/A",
+                    IsTemplate = t.IsTemplate,
+                    IsActive = t.IsActive
+                });
+            }
+
+            return result.OrderByDescending(t => t.Day).ToList();
         }
     }
 }
