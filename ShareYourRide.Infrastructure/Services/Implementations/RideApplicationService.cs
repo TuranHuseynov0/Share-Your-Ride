@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using ShareYourRide.Application.DTOs.MatchedRide;
 using ShareYourRide.Application.DTOs.RideApplication;
 using ShareYourRide.Domain.Entities;
 using ShareYourRide.Domain.Enums;
+using ShareYourRide.Infrastructure.Identity;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
 using ShareYourRide.Infrastructure.Services.Interfaces;
 using System;
@@ -16,11 +19,16 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly decimal _fixedFare;
+        private readonly UserManager<ApplicationUser> _userManager; // YENİ
 
-        public RideApplicationService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        public RideApplicationService(
+            IUnitOfWork unitOfWork,
+            IConfiguration configuration,
+            UserManager<ApplicationUser> userManager) // YENİ parametr
         {
             _unitOfWork = unitOfWork;
             _fixedFare = decimal.Parse(configuration["RideSettings:FixedFareAzn"] ?? "3");
+            _userManager = userManager;
         }
 
         public async Task<RideApplicationDto> ApplyAsync(Guid passengerUserId, CreateRideApplicationDto dto)
@@ -154,6 +162,59 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 DriverFullName = driver != null ? $"{driver.FirstName} {driver.LastName}" : "N/A",
                 Status = application.Status,
                 CreatedAt = application.CreatedAt
+            };
+        }
+
+        public async Task<IReadOnlyList<RideApplicationDto>> GetMyCompletedRidesAsync(Guid passengerUserId)
+        {
+            var applications = await _unitOfWork.RideApplications.FindAsync(
+                a => a.PassengerUserId == passengerUserId && a.Status == RideApplicationStatus.Approved);
+
+            var result = new List<RideApplicationDto>();
+            foreach (var a in applications.OrderByDescending(a => a.CreatedAt))
+                result.Add(await MapToDtoAsync(a));
+            return result;
+        }
+
+        public async Task<MatchedRideDto?> GetCurrentMatchAsync(Guid passengerUserId)
+        {
+            // 1) Bu sərnişinin bütün Approved statuslu müraciətlərini tapırıq
+            var applications = await _unitOfWork.RideApplications.FindAsync(
+                a => a.PassengerUserId == passengerUserId && a.Status == RideApplicationStatus.Approved);
+
+            // 2) Ən son (CreatedAt-a görə) approved müraciəti götürürük
+            var latest = applications.OrderByDescending(a => a.CreatedAt).FirstOrDefault();
+            if (latest == null)
+                return null;
+
+            // 3) Trajectory-dən sürücünün UserId-sini alırıq
+            var driverTrajectory = await _unitOfWork.Trajectories.GetByIdAsync(latest.DriverTrajectoryId);
+            if (driverTrajectory == null)
+                return null;
+
+            // 4) Sürücünün domain User qeydini alırıq
+            var driverUser = await _unitOfWork.Users.GetByIdAsync(driverTrajectory.UserId);
+            if (driverUser == null)
+                return null;
+
+            // 5) Sürücünün ApplicationUser-ini (telefon nömrəsi üçün) alırıq
+            var driverAppUser = await _userManager.FindByIdAsync(driverUser.ApplicationUserId.ToString());
+
+            // 6) Sürücünün avtomobilini tapırıq
+            var vehicle = (await _unitOfWork.Vehicles.FindAsync(v => v.UserId == driverUser.Id)).FirstOrDefault();
+            if (vehicle == null)
+                return null;
+
+            return new MatchedRideDto
+            {
+                DriverFullName = $"{driverUser.FirstName} {driverUser.LastName}",
+                DriverPhoneNumber = driverAppUser?.PhoneNumber ?? string.Empty,
+                VehicleBrand = vehicle.Brand,
+                VehicleModel = vehicle.Model,
+                VehicleColor = vehicle.Color,
+                PlateNumber = vehicle.PlateNumber,
+                Fare = _fixedFare,
+                MatchedAt = latest.CreatedAt
             };
         }
     }

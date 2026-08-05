@@ -6,6 +6,7 @@ using ShareYourRide.Domain.Enums;
 using ShareYourRide.Infrastructure.Identity;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
 using ShareYourRide.Infrastructure.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ShareYourRide.Infrastructure.Services.Implementations
 {
@@ -16,20 +17,26 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
         private readonly ITokenService _tokenService;
         private readonly ISmsSender _smsSender;
         private readonly IEmailSender _emailSender;
+        private readonly IMemoryCache _cache;
 
         public AuthService(
             UserManager<ApplicationUser> userManager,
             IUnitOfWork unitOfWork,
             ITokenService tokenService,
             ISmsSender smsSender,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IMemoryCache cache)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _smsSender = smsSender;
             _emailSender = emailSender;
+            _cache = cache;
         }
+
+        private static string PendingKey(Guid id) => $"pending-registration:{id}";
+        private static string GenerateOtp() => Random.Shared.Next(100000, 999999).ToString();
 
         public async Task<RegisterPersonalInfoResponseDto> RegisterPersonalInfoAsync(RegisterPersonalInfoDto dto)
         {
@@ -41,120 +48,133 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (phoneExists)
                 throw new InvalidOperationException("Bu telefon nömrəsi artıq qeydiyyatdan keçib.");
 
-            var appUser = new ApplicationUser
+            var emailExists = await _userManager.FindByEmailAsync(dto.Email) != null;
+            if (emailExists)
+                throw new InvalidOperationException("Bu email artıq qeydiyyatdan keçib.");
+
+            var pendingId = Guid.NewGuid();
+            var pending = new PendingRegistration
             {
-                UserName = dto.Email,
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber
+                PersonalInfo = dto,
+                OtpCode = GenerateOtp()
             };
 
-            var identityResult = await _userManager.CreateAsync(appUser, dto.Password);
-            if (!identityResult.Succeeded)
-            {
-                if (identityResult.Errors.Any(e => e.Code is "DuplicateUserName" or "DuplicateEmail"))
-                    throw new InvalidOperationException("Bu email artıq qeydiyyatdan keçib.");
+            _cache.Set(PendingKey(pendingId), pending, TimeSpan.FromMinutes(10));
+            await _emailSender.SendAsync(dto.Email, "Qeydiyyat təsdiq kodu", $"Kodunuz: {pending.OtpCode}");
 
-                throw new InvalidOperationException(string.Join(", ", identityResult.Errors.Select(e => e.Description)));
+            return new RegisterPersonalInfoResponseDto
+            {
+                UserId = pendingId, // əslində "pendingId"
+                MaskedEmail = MaskEmail(dto.Email),
+                OtpExpirySeconds = 600,
+                RequiresVehicleInfo = dto.Role == TrajectoryRole.Driver
+            };
+        }
+
+        public Task RegisterVehicleInfoAsync(RegisterVehicleDto dto)
+        {
+            var key = PendingKey(dto.UserId);
+            if (!_cache.TryGetValue(key, out PendingRegistration? pending) || pending is null)
+                throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
+
+            pending.VehicleInfo = dto;
+            _cache.Set(key, pending, TimeSpan.FromMinutes(10));
+            return Task.CompletedTask;
+        }
+
+        public async Task<AuthResponseDto> VerifyRegistrationOtpAsync(VerifyRegistrationOtpDto dto)
+        {
+            var key = PendingKey(dto.UserId);
+            if (!_cache.TryGetValue(key, out PendingRegistration? pending) || pending is null)
+                throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
+
+            if (pending.OtpCode != dto.Code)
+            {
+                pending.FailedAttempts++;
+                if (pending.FailedAttempts >= 5)
+                {
+                    _cache.Remove(key);
+                    throw new InvalidOperationException("Cəhd limiti aşıldı. Zəhmət olmasa yenidən qeydiyyatdan keçin.");
+                }
+                _cache.Set(key, pending, TimeSpan.FromMinutes(10));
+                throw new InvalidOperationException("Kod yanlışdır və ya vaxtı bitib.");
             }
+
+            var info = pending.PersonalInfo;
+
+            // Commit anında təkrar unikallıq yoxlaması (race condition qarşısını almaq üçün)
+            var finExists = (await _unitOfWork.Users.FindAsync(u => u.FinCode == info.FinCode)).Any();
+            if (finExists)
+            {
+                _cache.Remove(key);
+                throw new InvalidOperationException("Bu FIN kod artıq qeydiyyatdan keçib.");
+            }
+
+            var appUser = new ApplicationUser
+            {
+                UserName = info.Email,
+                Email = info.Email,
+                PhoneNumber = info.PhoneNumber,
+                EmailConfirmed = true
+            };
+
+            var identityResult = await _userManager.CreateAsync(appUser, info.Password);
+            if (!identityResult.Succeeded)
+                throw new InvalidOperationException(string.Join(", ", identityResult.Errors.Select(e => e.Description)));
 
             await _userManager.AddToRoleAsync(appUser, nameof(RoleType.User));
 
             var domainUser = new User
             {
                 ApplicationUserId = appUser.Id,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                FinCode = dto.FinCode,
-                BirthDate = dto.BirthDate,
+                FirstName = info.FirstName,
+                LastName = info.LastName,
+                FinCode = info.FinCode,
+                BirthDate = info.BirthDate,
                 Status = UserStatus.Pending
             };
 
             await _unitOfWork.Users.AddAsync(domainUser);
             await _unitOfWork.SaveChangesAsync();
 
-            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");
-
-            var (registrationToken, expiresAt) = _tokenService.GenerateToken(domainUser.Id, dto.Email, nameof(RoleType.User));
-
-            return new RegisterPersonalInfoResponseDto
+            if (pending.VehicleInfo != null)
             {
-                UserId = domainUser.Id,
-                MaskedEmail = MaskEmail(dto.Email),
-                OtpExpirySeconds = 60,
-                RequiresVehicleInfo = dto.Role == TrajectoryRole.Driver,
-                Token = registrationToken,
-                TokenExpiresAt = expiresAt
-            };
-        }
-
-        public async Task RegisterVehicleInfoAsync(RegisterVehicleDto dto)
-        {
-            var domainUser = await _unitOfWork.Users.GetByIdAsync(dto.UserId)
-                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
-
-            var vehicle = new Vehicle
-            {
-                UserId = domainUser.Id,
-                Brand = dto.Brand,
-                Model = dto.Model,
-                Color = dto.Color,
-                Year = dto.Year,
-                PlateNumber = dto.PlateNumber,
-                Images = new List<VehicleImage>
+                var v = pending.VehicleInfo;
+                var vehicle = new Vehicle
                 {
-                    new() { ImagePath = dto.FrontImagePath, Side = VehicleImageSide.Front },
-                    new() { ImagePath = dto.BackImagePath, Side = VehicleImageSide.Back },
-                    new() { ImagePath = dto.LeftImagePath, Side = VehicleImageSide.Left },
-                    new() { ImagePath = dto.RightImagePath, Side = VehicleImageSide.Right }
-                }
-            };
+                    UserId = domainUser.Id,
+                    Brand = v.Brand,
+                    Model = v.Model,
+                    Color = v.Color,
+                    Year = v.Year,
+                    PlateNumber = v.PlateNumber,
+                    Images = new List<VehicleImage>
+            {
+                new() { ImagePath = v.FrontImagePath, Side = VehicleImageSide.Front },
+                new() { ImagePath = v.BackImagePath, Side = VehicleImageSide.Back },
+                new() { ImagePath = v.LeftImagePath, Side = VehicleImageSide.Left },
+                new() { ImagePath = v.RightImagePath, Side = VehicleImageSide.Right }
+            }
+                };
+                await _unitOfWork.Vehicles.AddAsync(vehicle);
+                await _unitOfWork.SaveChangesAsync();
+            }
 
-            await _unitOfWork.Vehicles.AddAsync(vehicle);
-            await _unitOfWork.SaveChangesAsync();
+            _cache.Remove(key);
+            return await BuildAuthResponseAsync(appUser, domainUser);
         }
 
-        public async Task<AuthResponseDto> VerifyRegistrationOtpAsync(VerifyRegistrationOtpDto dto)
-{
-    var domainUser = await _unitOfWork.Users.GetByIdAsync(dto.UserId)
-        ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
-
-    var appUser = await _userManager.FindByIdAsync(domainUser.ApplicationUserId.ToString())
-        ?? throw new InvalidOperationException("Hesab tapılmadı.");
-
-    var isValid = await _userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultEmailProvider, "EmailConfirmation", dto.Code);
-    if (!isValid)
-        throw new InvalidOperationException("Kod yanlışdır və ya vaxtı bitib.");
-
-    appUser.EmailConfirmed = true;
-    await _userManager.UpdateAsync(appUser);
-
-    // YENİ: sərnişini avtomatik təsdiqlə, sürücünü admin-ə saxla
-    var hasVehicle = (await _unitOfWork.Vehicles.FindAsync(v => v.UserId == domainUser.Id)).Any();
-    if (!hasVehicle && domainUser.Status == UserStatus.Pending)
-    {
-        domainUser.Status = UserStatus.Approved;
-        _unitOfWork.Users.Update(domainUser);
-
-        var existingWallet = await _unitOfWork.Wallets.SingleOrDefaultAsync(w => w.UserId == domainUser.Id);
-        if (existingWallet == null)
+        public Task ResendRegistrationOtpAsync(ResendRegistrationOtpDto dto)
         {
-            await _unitOfWork.Wallets.AddAsync(new Wallet { UserId = domainUser.Id, Balance = 0 });
-        }
-        await _unitOfWork.SaveChangesAsync();
-    }
+            var key = PendingKey(dto.UserId);
+            if (!_cache.TryGetValue(key, out PendingRegistration? pending) || pending is null)
+                throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
 
-    return await BuildAuthResponseAsync(appUser, domainUser);
-}
+            pending.OtpCode = GenerateOtp();
+            pending.FailedAttempts = 0;
+            _cache.Set(key, pending, TimeSpan.FromMinutes(10));
 
-        public async Task ResendRegistrationOtpAsync(ResendRegistrationOtpDto dto)
-        {
-            var domainUser = await _unitOfWork.Users.GetByIdAsync(dto.UserId)
-                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
-
-            var appUser = await _userManager.FindByIdAsync(domainUser.ApplicationUserId.ToString())
-                ?? throw new InvalidOperationException("Hesab tapılmadı.");
-
-            await SendEmailOtpAsync(appUser, "EmailConfirmation", "Qeydiyyat təsdiq kodu");   // DƏYİŞDİ
+            return _emailSender.SendAsync(pending.PersonalInfo.Email, "Qeydiyyat təsdiq kodu", $"Kodunuz: {pending.OtpCode}");
         }
 
         public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
@@ -275,5 +295,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             await _unitOfWork.Vehicles.AddAsync(vehicle);
             await _unitOfWork.SaveChangesAsync();
         }
+
+
     }
 }

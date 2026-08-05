@@ -8,7 +8,6 @@ namespace ShareYourRide.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class FileController : ControllerBase
     {
         private readonly IFileStorageService _fileStorageService;
@@ -17,7 +16,7 @@ namespace ShareYourRide.API.Controllers
         private static readonly HashSet<string> AllowedFolders = new(StringComparer.OrdinalIgnoreCase)
         {
             "profile",
-            "vehicle"
+            "vehicles"
         };
 
         public FileController(IFileStorageService fileStorageService)
@@ -25,23 +24,33 @@ namespace ShareYourRide.API.Controllers
             _fileStorageService = fileStorageService;
         }
 
-        private Guid CurrentUserId => Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
         [HttpPost("upload")]
-        public async Task<IActionResult> Upload(IFormFile file, [FromQuery] string folder = "profile")
+        public async Task<IActionResult> Upload(IFormFile file, [FromQuery] string folder, [FromQuery] Guid? userId = null)
         {
             if (!AllowedFolders.Contains(folder))
-                return BadRequest(new { message = "Bu bölməyə fayl yükləməyə icazə yoxdur." });
+                return BadRequest(new { message = "Bu bölməyə fayl yükləməyə icazə yoxdur." }); //[cite: 2]
 
             try
             {
-                var scopedFolder = $"{folder}/{CurrentUserId}";
-                var path = await _fileStorageService.SaveFileAsync(file, scopedFolder);
-                return Ok(new { path });
+                // Əgər userId parametr kimi gəlməyibsə, Claim-dən oxumağa çalış
+                var targetUserId = userId ?? Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) ?? Guid.Empty.ToString());
+
+                if (targetUserId == Guid.Empty)
+                    return Unauthorized(new { message = "İstifadəçi tapılmadı. Zəhmət olmasa userId göndərin və ya sistemə daxil olun." });
+
+                var scopedFolder = $"{folder}/{targetUserId}"; //[cite: 2]
+                var path = await _fileStorageService.SaveFileAsync(file, scopedFolder); //[cite: 2]
+
+                return Ok(new { path }); //[cite: 2]
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException ex) //[cite: 2]
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new { message = ex.Message }); //[cite: 2]
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Fayl yüklənərkən xəta baş verdi." });
             }
         }
     }

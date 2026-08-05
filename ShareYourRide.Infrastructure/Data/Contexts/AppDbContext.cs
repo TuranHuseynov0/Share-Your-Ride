@@ -28,7 +28,6 @@ namespace ShareYourRide.Infrastructure.Data
         public DbSet<VehicleBrand> VehicleBrands => Set<VehicleBrand>();
         public DbSet<VehicleModel> VehicleModels => Set<VehicleModel>();
         public DbSet<VehicleColor> VehicleColors => Set<VehicleColor>();
-        public DbSet<FaqItem> FaqItems => Set<FaqItem>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

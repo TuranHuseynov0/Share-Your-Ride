@@ -76,5 +76,22 @@ namespace ShareYourRide.API.Controllers
             var result = await _rideApplicationService.GetIncomingApplicationsAsync(CurrentUserId);
             return Ok(result);
         }
+
+        [HttpGet("completed")]
+        public async Task<IActionResult> GetCompleted()
+        {
+            var result = await _rideApplicationService.GetMyCompletedRidesAsync(CurrentUserId);
+            return Ok(result);
+        }
+
+        [HttpGet("current-match")]
+        public async Task<IActionResult> GetCurrentMatch()
+        {
+            var result = await _rideApplicationService.GetCurrentMatchAsync(CurrentUserId);
+            if (result == null)
+                return Ok(null); // heç uyğunlaşma yoxdursa, boş cavab
+
+            return Ok(result);
+        }
     }
 }

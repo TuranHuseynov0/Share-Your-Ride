@@ -24,7 +24,6 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
         public IGenericRepository<VehicleBrand> VehicleBrands { get; }
         public IGenericRepository<VehicleModel> VehicleModels { get; }
         public IGenericRepository<VehicleColor> VehicleColors { get; }
-        public IGenericRepository<FaqItem> FaqItems { get; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -40,7 +39,6 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
             VehicleBrands = new GenericRepository<VehicleBrand>(context);
             VehicleModels = new GenericRepository<VehicleModel>(context);
             VehicleColors = new GenericRepository<VehicleColor>(context);
-            FaqItems = new GenericRepository<FaqItem>(context);
         }
 
         public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();

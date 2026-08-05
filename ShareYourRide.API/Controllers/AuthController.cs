@@ -33,13 +33,11 @@ namespace ShareYourRide.API.Controllers
         }
 
         [HttpPost("register/vehicle-info")]
-        [Authorize]
         public async Task<IActionResult> RegisterVehicleInfo(RegisterVehicleDto dto)
         {
             try
             {
-                var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-                await _authService.RegisterVehicleInfoAsync(currentUserId, dto);
+                await _authService.RegisterVehicleInfoAsync(dto);
                 return Ok();
             }
             catch (InvalidOperationException ex)

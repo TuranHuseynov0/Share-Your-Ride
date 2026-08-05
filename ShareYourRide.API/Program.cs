@@ -113,6 +113,8 @@ namespace ShareYourRide.API
                 });
             });
 
+            builder.Services.AddMemoryCache();
+
             var app = builder.Build();
 
             app.UseDeveloperExceptionPage();   // MÜVƏQQƏTİ
@@ -122,11 +124,11 @@ namespace ShareYourRide.API
             app.UseSwagger();
             app.UseSwaggerUI();
 
+            app.UseCors("AllowTester");
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("AllowTester");
             app.MapControllers();
             app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 

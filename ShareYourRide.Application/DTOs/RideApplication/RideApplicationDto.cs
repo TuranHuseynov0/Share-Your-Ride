@@ -16,5 +16,8 @@ namespace ShareYourRide.Application.DTOs.RideApplication
         [Required] public string DriverFullName { get; set; } = default!;
         public RideApplicationStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
+        public decimal Fare { get; set; }
+        public string StartStopName { get; set; } = default!;
+        public string EndStopName { get; set; } = default!;
     }
 }
