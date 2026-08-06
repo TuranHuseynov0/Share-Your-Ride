@@ -4,10 +4,10 @@ using ShareYourRide.Domain.Entities;
 using ShareYourRide.Domain.Enums;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
 using ShareYourRide.Infrastructure.Services.Interfaces;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShareYourRide.Infrastructure.Services.Implementations
@@ -15,10 +15,15 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
     public class TrajectoryService : ITrajectoryService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly decimal _pricePerStop;
 
-        public TrajectoryService(IUnitOfWork unitOfWork)
+        // Sürücü/sərnişin saatları arasında icazə verilən tolerans
+        private static readonly TimeSpan TimeWindow = TimeSpan.FromMinutes(20);
+
+        public TrajectoryService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _pricePerStop = decimal.Parse(configuration["RideSettings:PricePerStopAzn"] ?? "3.5");
         }
 
         private static DayOfWeekType MapDayOfWeek(DayOfWeek day) => day switch
@@ -41,46 +46,116 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (user.Status != UserStatus.Approved)
                 throw new InvalidOperationException("Hesabınız hələ admin tərəfindən təsdiqlənməyib.");
 
-            var trajectory = new Trajectory
+            if (dto.StartStopId == dto.EndStopId)
+                throw new InvalidOperationException("Başlanğıc və son dayanacaq eyni ola bilməz.");
+
+            if (dto.Role == TrajectoryRole.Driver && (dto.SeatCount is null || dto.SeatCount <= 0))
+                throw new InvalidOperationException("Sürücü üçün oturacaq sayı seçilməlidir.");
+
+            var startStop = await _unitOfWork.Stops.GetByIdAsync(dto.StartStopId)
+                ?? throw new InvalidOperationException("Başlanğıc dayanacaq tapılmadı.");
+            var endStop = await _unitOfWork.Stops.GetByIdAsync(dto.EndStopId)
+                ?? throw new InvalidOperationException("Son dayanacaq tapılmadı.");
+
+            var scheduleGroupId = Guid.NewGuid();
+            var response = new CreateTrajectoryResponseDto();
+
+            foreach (var day in dto.DaysOfWeek.Distinct())
             {
-                UserId = userId,
-                Role = dto.Role,
-                Day = MapDayOfWeek(dto.DayOfWeek),
-                Time = dto.Time,
-                StartStopId = dto.StartStopId,
-                EndStopId = dto.EndStopId,
-                IsTemplate = dto.SaveAsTemplate,
-            };
+                var mappedDay = MapDayOfWeek(day);
 
-            await _unitOfWork.Trajectories.AddAsync(trajectory);
-            await _unitOfWork.SaveChangesAsync();
+                var trajectory = new Trajectory
+                {
+                    UserId = userId,
+                    Role = dto.Role,
+                    Day = mappedDay,
+                    Time = dto.Time,
+                    StartStopId = dto.StartStopId,
+                    EndStopId = dto.EndStopId,
+                    IsTemplate = dto.SaveAsTemplate,
+                    ScheduleGroupId = scheduleGroupId,
+                    SeatCount = dto.Role == TrajectoryRole.Driver ? dto.SeatCount : null
+                };
 
-            var response = new CreateTrajectoryResponseDto { Id = trajectory.Id };
+                await _unitOfWork.Trajectories.AddAsync(trajectory);
+                await _unitOfWork.SaveChangesAsync();
 
-            if (dto.Role == TrajectoryRole.Passenger)
-                response.Matches = await FindMatchesAsync(trajectory);
+                await CreateWaypointsAsync(trajectory.Id, startStop.Order, endStop.Order);
+
+                var createdDto = new CreatedTrajectoryDto { Id = trajectory.Id, Day = mappedDay };
+
+                if (dto.Role == TrajectoryRole.Passenger)
+                    createdDto.Matches = await FindMatchesAsync(trajectory);
+
+                response.CreatedTrajectories.Add(createdDto);
+            }
 
             return response;
         }
 
+        // Başlanğıc və son dayanacaq arasındakı BÜTÜN aralıq dayanacaqlarını (özləri daxil) waypoint kimi yazır.
+        // Bu, matching zamanı iki trayektoriyanın "ortaq dayanacaqlarını" tapmaq üçün istifadə olunur.
+        private async Task CreateWaypointsAsync(Guid trajectoryId, int startOrder, int endOrder)
+        {
+            var lo = Math.Min(startOrder, endOrder);
+            var hi = Math.Max(startOrder, endOrder);
+
+            var stopsInRange = (await _unitOfWork.Stops.FindAsync(s => s.Order >= lo && s.Order <= hi))
+                .OrderBy(s => s.Order)
+                .ToList();
+
+            // Əgər istiqamət tərsdirsə (məs. Nəsimi -> Dərnəgül), sıranı tərsinə çeviririk
+            if (startOrder > endOrder)
+                stopsInRange.Reverse();
+
+            int order = 0;
+            foreach (var stop in stopsInRange)
+            {
+                await _unitOfWork.TrajectoryWaypoints.AddAsync(new TrajectoryWaypoint
+                {
+                    TrajectoryId = trajectoryId,
+                    StopId = stop.Id,
+                    Order = order++
+                });
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         private async Task<List<DriverMatchDto>> FindMatchesAsync(Trajectory passengerTrajectory)
         {
+            var passengerStopIds = (await _unitOfWork.TrajectoryWaypoints
+                    .FindAsync(w => w.TrajectoryId == passengerTrajectory.Id))
+                .Select(w => w.StopId)
+                .ToHashSet();
+
             var driverTrajectories = await _unitOfWork.Trajectories.FindAsync(t =>
                 t.Role == TrajectoryRole.Driver &&
                 t.IsActive &&
+                !t.IsTemplate &&
                 t.Day == passengerTrajectory.Day);
 
             var matches = new List<DriverMatchDto>();
 
             foreach (var dt in driverTrajectories)
             {
-                var commonCount = 0;
-                if (dt.StartStopId == passengerTrajectory.StartStopId || dt.StartStopId == passengerTrajectory.EndStopId)
-                    commonCount++;
-                if (dt.EndStopId == passengerTrajectory.StartStopId || dt.EndStopId == passengerTrajectory.EndStopId)
-                    commonCount++;
+                if ((dt.Time - passengerTrajectory.Time).Duration() > TimeWindow)
+                    continue;
 
+                var driverStopIds = (await _unitOfWork.TrajectoryWaypoints
+                        .FindAsync(w => w.TrajectoryId == dt.Id))
+                    .Select(w => w.StopId)
+                    .ToHashSet();
+
+                var commonCount = passengerStopIds.Intersect(driverStopIds).Count();
                 if (commonCount == 0)
+                    continue;
+
+                var approvedCount = (await _unitOfWork.RideApplications.FindAsync(a =>
+                    a.DriverTrajectoryId == dt.Id && a.Status == RideApplicationStatus.Approved)).Count;
+
+                var remainingSeats = (dt.SeatCount ?? 0) - approvedCount;
+                if (remainingSeats <= 0)
                     continue;
 
                 var driverUser = await _unitOfWork.Users.GetByIdAsync(dt.UserId);
@@ -97,7 +172,9 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                     VehicleModel = vehicle.Model,
                     VehicleColor = vehicle.Color,
                     DriverTime = dt.Time,
-                    CommonStopsCount = commonCount
+                    CommonStopsCount = commonCount,
+                    Price = commonCount * _pricePerStop,
+                    RemainingSeats = remainingSeats
                 });
             }
 
@@ -118,10 +195,11 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             return await CreateAsync(userId, new CreateTrajectoryDto
             {
                 Role = template.Role,
-                DayOfWeek = dto.Day,
+                DaysOfWeek = new List<DayOfWeek> { dto.Day },
                 Time = dto.Time,
                 StartStopId = template.StartStopId,
                 EndStopId = template.EndStopId,
+                SeatCount = template.SeatCount,
                 SaveAsTemplate = false
             });
         }
@@ -170,7 +248,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 });
             }
 
-            return result.OrderByDescending(t => t.Day).ToList();
+            return result.OrderBy(t => t.Day).ThenBy(t => t.Time).ToList();
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oB20GhotCcs=",
+  "dgSpecHash": "LoNt5zL4BKc=",
   "success": true,
   "projectFilePath": "C:\\Users\\Victus\\source\\repos\\Share-Your-Ride\\ShareYourRide.Infrastructure\\ShareYourRide.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -31,6 +31,7 @@
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.28\\microsoft.entityframeworkcore.tools.8.0.28.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.1\\microsoft.extensions.caching.memory.8.0.1.nupkg.sha512",
+    "C:\\Users\\Victus\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\8.0.28\\microsoft.extensions.caching.stackexchangeredis.8.0.28.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.3\\microsoft.extensions.configuration.abstractions.10.0.3.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.1\\microsoft.extensions.dependencyinjection.8.0.1.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.3\\microsoft.extensions.dependencyinjection.abstractions.10.0.3.nupkg.sha512",
@@ -55,6 +56,8 @@
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Victus\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "C:\\Users\\Victus\\.nuget\\packages\\stackexchange.redis\\2.7.27\\stackexchange.redis.2.7.27.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\system.clientmodel\\1.11.0\\system.clientmodel.1.11.0.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\Victus\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",

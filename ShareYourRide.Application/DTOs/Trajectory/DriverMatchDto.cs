@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System;
+
 namespace ShareYourRide.Application.DTOs.Trajectory
 {
     public class DriverMatchDto
@@ -15,5 +17,7 @@ namespace ShareYourRide.Application.DTOs.Trajectory
         public string VehicleColor { get; set; } = default!;
         public TimeSpan DriverTime { get; set; }
         public int CommonStopsCount { get; set; }
+        public decimal Price { get; set; }
+        public int RemainingSeats { get; set; }
     }
 }

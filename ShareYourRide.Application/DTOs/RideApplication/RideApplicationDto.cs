@@ -1,10 +1,6 @@
 ﻿using ShareYourRide.Domain.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShareYourRide.Application.DTOs.RideApplication
 {
@@ -16,7 +12,8 @@ namespace ShareYourRide.Application.DTOs.RideApplication
         [Required] public string DriverFullName { get; set; } = default!;
         public RideApplicationStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
-        public decimal Fare { get; set; }
+        public decimal Price { get; set; }
+        public int CommonStopsCount { get; set; }
         public string StartStopName { get; set; } = default!;
         public string EndStopName { get; set; } = default!;
     }

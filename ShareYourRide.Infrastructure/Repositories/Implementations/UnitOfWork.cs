@@ -1,10 +1,7 @@
 ﻿using ShareYourRide.Domain.Entities;
 using ShareYourRide.Infrastructure.Data;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ShareYourRide.Infrastructure.Repositories.Implementations
@@ -18,6 +15,7 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
         public IGenericRepository<VehicleImage> VehicleImages { get; }
         public IGenericRepository<Stop> Stops { get; }
         public IGenericRepository<Trajectory> Trajectories { get; }
+        public IGenericRepository<TrajectoryWaypoint> TrajectoryWaypoints { get; }
         public IGenericRepository<RideApplication> RideApplications { get; }
         public IGenericRepository<Wallet> Wallets { get; }
         public IGenericRepository<WalletTransaction> WalletTransactions { get; }
@@ -33,6 +31,7 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
             VehicleImages = new GenericRepository<VehicleImage>(context);
             Stops = new GenericRepository<Stop>(context);
             Trajectories = new GenericRepository<Trajectory>(context);
+            TrajectoryWaypoints = new GenericRepository<TrajectoryWaypoint>(context);
             RideApplications = new GenericRepository<RideApplication>(context);
             Wallets = new GenericRepository<Wallet>(context);
             WalletTransactions = new GenericRepository<WalletTransaction>(context);
@@ -41,13 +40,9 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
             VehicleColors = new GenericRepository<VehicleColor>(context);
         }
 
-        public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
-
         public void Dispose() => _context.Dispose();
 
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            return await _context.SaveChangesAsync(cancellationToken);
-        }
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
+            await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -10,6 +10,7 @@ namespace ShareYourRide.Domain.Entities
     public class Stop : BaseEntity
     {
         public string Name { get; set; } = default!;
+        public int Order { get; set; }
         public bool IsActive { get; set; } = true;
     }
 }

@@ -1,9 +1,9 @@
-﻿using ShareYourRide.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShareYourRide.Domain.Common;
 
 namespace ShareYourRide.Domain.Entities
 {
@@ -15,6 +15,6 @@ namespace ShareYourRide.Domain.Entities
         public Guid StopId { get; set; }
         public Stop Stop { get; set; } = default!;
 
-        public int Order { get; set; } 
+        public int Order { get; set; }
     }
 }

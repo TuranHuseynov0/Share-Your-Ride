@@ -2,9 +2,6 @@
 using ShareYourRide.Domain.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShareYourRide.Domain.Entities
 {
@@ -23,7 +20,11 @@ namespace ShareYourRide.Domain.Entities
         public Guid EndStopId { get; set; }
         public Stop EndStop { get; set; } = default!;
 
+        // Eyni sorğu ilə bir neçə gün üçün yaradılan trayektoriyaları qruplaşdırmaq üçün
         public Guid? ScheduleGroupId { get; set; }
+
+        // Yalnız Driver üçün: neçə sərnişin götürə bilər
+        public int? SeatCount { get; set; }
 
         public ICollection<TrajectoryWaypoint> Waypoints { get; set; } = new List<TrajectoryWaypoint>();
 

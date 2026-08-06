@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShareYourRide.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using ShareYourRide.Infrastructure.Data;
 namespace ShareYourRide.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260806095332_AddStopOrder")]
+    partial class AddStopOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,30 +162,19 @@ namespace ShareYourRide.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CommonStopsCount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("DriverTrajectoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PassengerTrajectoryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("PassengerUserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PassengerTrajectoryId");
 
                     b.HasIndex("PassengerUserId");
 
@@ -246,9 +238,6 @@ namespace ShareYourRide.Infrastructure.Migrations
 
                     b.Property<Guid?>("ScheduleGroupId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("SeatCount")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("StartStopId")
                         .HasColumnType("uniqueidentifier");
@@ -691,12 +680,6 @@ namespace ShareYourRide.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShareYourRide.Domain.Entities.Trajectory", "PassengerTrajectory")
-                        .WithMany()
-                        .HasForeignKey("PassengerTrajectoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ShareYourRide.Domain.Entities.User", "PassengerUser")
                         .WithMany()
                         .HasForeignKey("PassengerUserId")
@@ -704,8 +687,6 @@ namespace ShareYourRide.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("DriverTrajectory");
-
-                    b.Navigation("PassengerTrajectory");
 
                     b.Navigation("PassengerUser");
                 });

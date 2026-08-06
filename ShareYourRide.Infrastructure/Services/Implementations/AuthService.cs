@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using ShareYourRide.Application.DTOs.Auth;
 using ShareYourRide.Domain.Entities;
 using ShareYourRide.Domain.Enums;
 using ShareYourRide.Infrastructure.Identity;
 using ShareYourRide.Infrastructure.Repositories.Interfaces;
 using ShareYourRide.Infrastructure.Services.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace ShareYourRide.Infrastructure.Services.Implementations
 {
@@ -17,7 +22,17 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
         private readonly ITokenService _tokenService;
         private readonly ISmsSender _smsSender;
         private readonly IEmailSender _emailSender;
-        private readonly IMemoryCache _cache;
+        private readonly IDistributedCache _cache;
+
+        private static readonly DistributedCacheEntryOptions PendingCacheOptions = new()
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+        };
+
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
 
         public AuthService(
             UserManager<ApplicationUser> userManager,
@@ -25,7 +40,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             ITokenService tokenService,
             ISmsSender smsSender,
             IEmailSender emailSender,
-            IMemoryCache cache)
+            IDistributedCache cache)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
@@ -37,6 +52,24 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
 
         private static string PendingKey(Guid id) => $"pending-registration:{id}";
         private static string GenerateOtp() => Random.Shared.Next(100000, 999999).ToString();
+
+        // ---------- Redis üzərində pending registration idarəsi ----------
+
+        private async Task SetPendingAsync(Guid id, PendingRegistration pending)
+        {
+            var json = JsonSerializer.Serialize(pending, JsonOptions);
+            await _cache.SetStringAsync(PendingKey(id), json, PendingCacheOptions);
+        }
+
+        private async Task<PendingRegistration?> GetPendingAsync(Guid id)
+        {
+            var json = await _cache.GetStringAsync(PendingKey(id));
+            return json == null ? null : JsonSerializer.Deserialize<PendingRegistration>(json, JsonOptions);
+        }
+
+        private async Task RemovePendingAsync(Guid id) => await _cache.RemoveAsync(PendingKey(id));
+
+        // ---------- Qeydiyyat: 1-ci addım (şəxsi məlumatlar) ----------
 
         public async Task<RegisterPersonalInfoResponseDto> RegisterPersonalInfoAsync(RegisterPersonalInfoDto dto)
         {
@@ -59,44 +92,45 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 OtpCode = GenerateOtp()
             };
 
-            _cache.Set(PendingKey(pendingId), pending, TimeSpan.FromMinutes(10));
+            await SetPendingAsync(pendingId, pending);
             await _emailSender.SendAsync(dto.Email, "Qeydiyyat təsdiq kodu", $"Kodunuz: {pending.OtpCode}");
 
             return new RegisterPersonalInfoResponseDto
             {
-                UserId = pendingId, // əslində "pendingId"
+                UserId = pendingId,
                 MaskedEmail = MaskEmail(dto.Email),
                 OtpExpirySeconds = 600,
                 RequiresVehicleInfo = dto.Role == TrajectoryRole.Driver
             };
         }
 
-        public Task RegisterVehicleInfoAsync(RegisterVehicleDto dto)
+        // ---------- Qeydiyyat: 2-ci addım (maşın məlumatları, yalnız Driver üçün) ----------
+
+        public async Task RegisterVehicleInfoAsync(RegisterVehicleDto dto)
         {
-            var key = PendingKey(dto.UserId);
-            if (!_cache.TryGetValue(key, out PendingRegistration? pending) || pending is null)
-                throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
+            var pending = await GetPendingAsync(dto.UserId)
+                ?? throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
 
             pending.VehicleInfo = dto;
-            _cache.Set(key, pending, TimeSpan.FromMinutes(10));
-            return Task.CompletedTask;
+            await SetPendingAsync(dto.UserId, pending);
         }
+
+        // ---------- OTP təsdiqi: DB-yə yazılan yeganə yer ----------
 
         public async Task<AuthResponseDto> VerifyRegistrationOtpAsync(VerifyRegistrationOtpDto dto)
         {
-            var key = PendingKey(dto.UserId);
-            if (!_cache.TryGetValue(key, out PendingRegistration? pending) || pending is null)
-                throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
+            var pending = await GetPendingAsync(dto.UserId)
+                ?? throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
 
             if (pending.OtpCode != dto.Code)
             {
                 pending.FailedAttempts++;
                 if (pending.FailedAttempts >= 5)
                 {
-                    _cache.Remove(key);
+                    await RemovePendingAsync(dto.UserId);
                     throw new InvalidOperationException("Cəhd limiti aşıldı. Zəhmət olmasa yenidən qeydiyyatdan keçin.");
                 }
-                _cache.Set(key, pending, TimeSpan.FromMinutes(10));
+                await SetPendingAsync(dto.UserId, pending);
                 throw new InvalidOperationException("Kod yanlışdır və ya vaxtı bitib.");
             }
 
@@ -106,7 +140,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             var finExists = (await _unitOfWork.Users.FindAsync(u => u.FinCode == info.FinCode)).Any();
             if (finExists)
             {
-                _cache.Remove(key);
+                await RemovePendingAsync(dto.UserId);
                 throw new InvalidOperationException("Bu FIN kod artıq qeydiyyatdan keçib.");
             }
 
@@ -149,33 +183,34 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                     Year = v.Year,
                     PlateNumber = v.PlateNumber,
                     Images = new List<VehicleImage>
-            {
-                new() { ImagePath = v.FrontImagePath, Side = VehicleImageSide.Front },
-                new() { ImagePath = v.BackImagePath, Side = VehicleImageSide.Back },
-                new() { ImagePath = v.LeftImagePath, Side = VehicleImageSide.Left },
-                new() { ImagePath = v.RightImagePath, Side = VehicleImageSide.Right }
-            }
+                    {
+                        new() { ImagePath = v.FrontImagePath, Side = VehicleImageSide.Front },
+                        new() { ImagePath = v.BackImagePath, Side = VehicleImageSide.Back },
+                        new() { ImagePath = v.LeftImagePath, Side = VehicleImageSide.Left },
+                        new() { ImagePath = v.RightImagePath, Side = VehicleImageSide.Right }
+                    }
                 };
                 await _unitOfWork.Vehicles.AddAsync(vehicle);
                 await _unitOfWork.SaveChangesAsync();
             }
 
-            _cache.Remove(key);
+            await RemovePendingAsync(dto.UserId);
             return await BuildAuthResponseAsync(appUser, domainUser);
         }
 
-        public Task ResendRegistrationOtpAsync(ResendRegistrationOtpDto dto)
+        public async Task ResendRegistrationOtpAsync(ResendRegistrationOtpDto dto)
         {
-            var key = PendingKey(dto.UserId);
-            if (!_cache.TryGetValue(key, out PendingRegistration? pending) || pending is null)
-                throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
+            var pending = await GetPendingAsync(dto.UserId)
+                ?? throw new InvalidOperationException("Qeydiyyat sessiyasının vaxtı bitib. Zəhmət olmasa yenidən başlayın.");
 
             pending.OtpCode = GenerateOtp();
             pending.FailedAttempts = 0;
-            _cache.Set(key, pending, TimeSpan.FromMinutes(10));
+            await SetPendingAsync(dto.UserId, pending);
 
-            return _emailSender.SendAsync(pending.PersonalInfo.Email, "Qeydiyyat təsdiq kodu", $"Kodunuz: {pending.OtpCode}");
+            await _emailSender.SendAsync(pending.PersonalInfo.Email, "Qeydiyyat təsdiq kodu", $"Kodunuz: {pending.OtpCode}");
         }
+
+        // ---------- Login ----------
 
         public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
         {
@@ -195,6 +230,8 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             return await BuildAuthResponseAsync(appUser, domainUser);
         }
 
+        // ---------- Şifrə bərpası ----------
+
         public async Task ForgotPasswordAsync(ForgotPasswordDto dto)
         {
             var appUser = await FindByContactAsync(dto.Contact, dto.Channel)
@@ -203,7 +240,7 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (dto.Channel == OtpChannel.Phone)
                 await SendPhoneOtpAsync(appUser);
             else
-                await SendEmailOtpAsync(appUser, "ResetPassword", "Şifrə sıfırlama kodu");   // DƏYİŞDİ (parametrli çağırış)
+                await SendEmailOtpAsync(appUser, "ResetPassword", "Şifrə sıfırlama kodu");
         }
 
         public async Task ResetPasswordAsync(ResetPasswordDto dto)
@@ -224,6 +261,35 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 throw new InvalidOperationException(string.Join(", ", result.Errors.Select(e => e.Description)));
         }
 
+        // ---------- Onboarding-dən sonra ayrıca maşın əlavə etmə (artıq qeydiyyatdan keçmiş user üçün) ----------
+
+        public async Task RegisterVehicleInfoAsync(Guid userId, RegisterVehicleDto dto)
+        {
+            var domainUser = await _unitOfWork.Users.GetByIdAsync(userId)
+                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
+
+            var vehicle = new Vehicle
+            {
+                UserId = domainUser.Id,
+                Brand = dto.Brand,
+                Model = dto.Model,
+                Color = dto.Color,
+                Year = dto.Year,
+                PlateNumber = dto.PlateNumber,
+                Images = new List<VehicleImage>
+                {
+                    new() { ImagePath = dto.FrontImagePath, Side = VehicleImageSide.Front },
+                    new() { ImagePath = dto.BackImagePath, Side = VehicleImageSide.Back },
+                    new() { ImagePath = dto.LeftImagePath, Side = VehicleImageSide.Left },
+                    new() { ImagePath = dto.RightImagePath, Side = VehicleImageSide.Right }
+                }
+            };
+
+            await _unitOfWork.Vehicles.AddAsync(vehicle);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        // ---------- Köməkçi metodlar ----------
 
         private async Task<AuthResponseDto> BuildAuthResponseAsync(ApplicationUser appUser, User domainUser)
         {
@@ -268,34 +334,5 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             var visibleChars = Math.Min(2, atIndex);
             return $"{email[..visibleChars]}{new string('*', atIndex - visibleChars)}{email[atIndex..]}";
         }
-
-
-        public async Task RegisterVehicleInfoAsync(Guid userId, RegisterVehicleDto dto)
-        {
-            var domainUser = await _unitOfWork.Users.GetByIdAsync(userId)
-                ?? throw new InvalidOperationException("İstifadəçi tapılmadı.");
-
-            var vehicle = new Vehicle
-            {
-                UserId = domainUser.Id,
-                Brand = dto.Brand,
-                Model = dto.Model,
-                Color = dto.Color,
-                Year = dto.Year,
-                PlateNumber = dto.PlateNumber,
-                Images = new List<VehicleImage>
-        {
-            new() { ImagePath = dto.FrontImagePath, Side = VehicleImageSide.Front },
-            new() { ImagePath = dto.BackImagePath, Side = VehicleImageSide.Back },
-            new() { ImagePath = dto.LeftImagePath, Side = VehicleImageSide.Left },
-            new() { ImagePath = dto.RightImagePath, Side = VehicleImageSide.Right }
-        }
-            };
-
-            await _unitOfWork.Vehicles.AddAsync(vehicle);
-            await _unitOfWork.SaveChangesAsync();
-        }
-
-
     }
 }

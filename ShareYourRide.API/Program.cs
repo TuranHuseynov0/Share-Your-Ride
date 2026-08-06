@@ -113,11 +113,13 @@ namespace ShareYourRide.API
                 });
             });
 
-            builder.Services.AddMemoryCache();
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                options.InstanceName = "SYR_";
+            });
 
             var app = builder.Build();
-
-            app.UseDeveloperExceptionPage();   // MÜVƏQQƏTİ
 
 
             // Configure the HTTP request pipeline.
