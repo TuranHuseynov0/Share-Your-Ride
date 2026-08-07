@@ -65,5 +65,20 @@ namespace ShareYourRide.API.Controllers
             var result = await _trajectoryService.GetMyTrajectoriesAsync(userId);
             return Ok(result);
         }
+
+        [HttpDelete("templates/{id}")]
+        public async Task<IActionResult> DeleteTemplate(Guid id)
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            try
+            {
+                await _trajectoryService.DeleteTemplateAsync(userId, id);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

@@ -18,5 +18,6 @@ namespace ShareYourRide.Infrastructure.Services.Interfaces
         Task<IReadOnlyList<RideApplicationDto>> GetIncomingApplicationsAsync(Guid driverUserId);
         Task<IReadOnlyList<RideApplicationDto>> GetMyCompletedRidesAsync(Guid passengerUserId);
         Task<MatchedRideDto?> GetCurrentMatchAsync(Guid passengerUserId);
+        Task CompleteAsync(Guid driverUserId, Guid applicationId);
     }
 }

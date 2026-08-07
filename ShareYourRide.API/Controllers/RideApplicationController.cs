@@ -93,5 +93,19 @@ namespace ShareYourRide.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("{id}/complete")]
+        public async Task<IActionResult> Complete(Guid id)
+        {
+            try
+            {
+                await _rideApplicationService.CompleteAsync(CurrentUserId, id);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

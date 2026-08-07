@@ -19,15 +19,18 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
         private readonly IUnitOfWork _unitOfWork;
         private readonly decimal _pricePerStop;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IChatService _chatService;
 
         public RideApplicationService(
             IUnitOfWork unitOfWork,
             IConfiguration configuration,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IChatService chatService)
         {
             _unitOfWork = unitOfWork;
             _pricePerStop = decimal.Parse(configuration["RideSettings:PricePerStopAzn"] ?? "3.5");
             _userManager = userManager;
+            _chatService = chatService;
         }
 
         public async Task<RideApplicationDto> ApplyAsync(Guid passengerUserId, CreateRideApplicationDto dto)
@@ -153,8 +156,8 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
 
             await _unitOfWork.SaveChangesAsync();
 
-            // NOT: Chat thread yaradılması 4-cü tapşırıqda buraya əlavə olunacaq
-            // (ChatService inteqrasiyası zamanı).
+            var driverUser = driverTrajectory.UserId;
+            await _chatService.CreateThreadForApplicationAsync(application.Id, driverTrajectory.UserId, application.PassengerUserId);
         }
 
         public async Task RejectAsync(Guid driverUserId, Guid applicationId)
@@ -279,5 +282,19 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
                 EndStopName = endStop?.Name ?? "N/A"
             };
         }
+
+        public async Task CompleteAsync(Guid driverUserId, Guid applicationId)
+        {
+            var application = await GetOwnedApplicationAsync(driverUserId, applicationId);
+
+            if (application.Status != RideApplicationStatus.Approved)
+                throw new InvalidOperationException("Yalnız təsdiqlənmiş gedişlər tamamlana bilər.");
+
+            application.Status = RideApplicationStatus.Completed;
+            _unitOfWork.RideApplications.Update(application);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+
     }
 }

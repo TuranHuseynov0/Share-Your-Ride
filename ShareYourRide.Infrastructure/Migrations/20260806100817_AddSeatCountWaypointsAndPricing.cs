@@ -49,7 +49,7 @@ namespace ShareYourRide.Infrastructure.Migrations
                 column: "PassengerTrajectoryId",
                 principalTable: "Trajectories",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         /// <inheritdoc />

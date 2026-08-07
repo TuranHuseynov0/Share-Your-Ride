@@ -52,6 +52,17 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             if (dto.Role == TrajectoryRole.Driver && (dto.SeatCount is null || dto.SeatCount <= 0))
                 throw new InvalidOperationException("Sürücü üçün oturacaq sayı seçilməlidir.");
 
+            if (dto.SaveAsTemplate)
+            {
+                var existingTemplatesCount = (await _unitOfWork.Trajectories
+                    .FindAsync(t => t.UserId == userId && t.IsTemplate)).Count;
+
+                var newTemplatesCount = dto.DaysOfWeek.Distinct().Count();
+
+                if (existingTemplatesCount + newTemplatesCount > 3)
+                    throw new InvalidOperationException("Maksimum 3 şablon saxlaya bilərsiniz.");
+            }
+
             var startStop = await _unitOfWork.Stops.GetByIdAsync(dto.StartStopId)
                 ?? throw new InvalidOperationException("Başlanğıc dayanacaq tapılmadı.");
             var endStop = await _unitOfWork.Stops.GetByIdAsync(dto.EndStopId)
@@ -249,6 +260,18 @@ namespace ShareYourRide.Infrastructure.Services.Implementations
             }
 
             return result.OrderBy(t => t.Day).ThenBy(t => t.Time).ToList();
+        }
+
+        public async Task DeleteTemplateAsync(Guid userId, Guid templateId)
+        {
+            var template = await _unitOfWork.Trajectories.GetByIdAsync(templateId)
+                ?? throw new InvalidOperationException("Şablon tapılmadı.");
+
+            if (template.UserId != userId || !template.IsTemplate)
+                throw new InvalidOperationException("Bu şablon sizə aid deyil.");
+
+            _unitOfWork.Trajectories.Remove(template);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

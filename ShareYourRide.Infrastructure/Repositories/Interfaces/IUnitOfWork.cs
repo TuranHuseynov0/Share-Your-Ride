@@ -18,6 +18,9 @@ namespace ShareYourRide.Infrastructure.Repositories.Interfaces
         IGenericRepository<VehicleBrand> VehicleBrands { get; }
         IGenericRepository<VehicleModel> VehicleModels { get; }
         IGenericRepository<VehicleColor> VehicleColors { get; }
+        IGenericRepository<Review> Reviews { get; }
+        IGenericRepository<ChatThread> ChatThreads { get; }
+        IGenericRepository<ChatMessage> ChatMessages { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

@@ -83,6 +83,8 @@ namespace ShareYourRide.API
             builder.Services.AddScoped<IEmailSender, ShareYourRide.Infrastructure.Services.Implementations.SmtpEmailSender>();
             builder.Services.AddScoped<IUserService, ShareYourRide.Infrastructure.Services.Implementations.UserService>();
             builder.Services.AddScoped<IVehicleCatalogService, ShareYourRide.Infrastructure.Services.Implementations.VehicleCatalogService>();
+            builder.Services.AddScoped<IReviewService, ShareYourRide.Infrastructure.Services.Implementations.ReviewService>();
+            builder.Services.AddScoped<IChatService, ShareYourRide.Infrastructure.Services.Implementations.ChatService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

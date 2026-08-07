@@ -22,6 +22,10 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
         public IGenericRepository<VehicleBrand> VehicleBrands { get; }
         public IGenericRepository<VehicleModel> VehicleModels { get; }
         public IGenericRepository<VehicleColor> VehicleColors { get; }
+        public IGenericRepository<Review> Reviews { get; }
+        public IGenericRepository<ChatThread> ChatThreads { get; }
+        public IGenericRepository<ChatMessage> ChatMessages { get; }
+
 
         public UnitOfWork(AppDbContext context)
         {
@@ -38,6 +42,9 @@ namespace ShareYourRide.Infrastructure.Repositories.Implementations
             VehicleBrands = new GenericRepository<VehicleBrand>(context);
             VehicleModels = new GenericRepository<VehicleModel>(context);
             VehicleColors = new GenericRepository<VehicleColor>(context);
+            Reviews = new GenericRepository<Review>(context);
+            ChatThreads = new GenericRepository<ChatThread>(context);
+            ChatMessages = new GenericRepository<ChatMessage>(context);
         }
 
         public void Dispose() => _context.Dispose();
