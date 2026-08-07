@@ -2,7 +2,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 using Microsoft.IdentityModel.Tokens;
 using ShareYourRide.Infrastructure.Data;
 using ShareYourRide.Infrastructure.Identity;
@@ -115,11 +120,39 @@ namespace ShareYourRide.API
                 });
             });
 
-            builder.Services.AddStackExchangeRedisCache(options =>
+            var redisConnection = builder.Configuration.GetConnectionString("Redis");
+            if (string.IsNullOrWhiteSpace(redisConnection))
             {
-                options.Configuration = builder.Configuration.GetConnectionString("Redis");
-                options.InstanceName = "SYR_";
-            });
+                builder.Services.AddDistributedMemoryCache();
+            }
+            else
+            {
+                var redisOptions = ConfigurationOptions.Parse(redisConnection);
+                redisOptions.AbortOnConnectFail = false;
+                redisOptions.ConnectTimeout = 5000;
+                redisOptions.SyncTimeout = 5000;
+                redisOptions.ConnectRetry = 2;
+
+                var redisPassword = builder.Configuration["Redis:Password"];
+                if (!string.IsNullOrWhiteSpace(redisPassword))
+                    redisOptions.Password = redisPassword;
+
+                var redisUser = builder.Configuration["Redis:User"];
+                if (!string.IsNullOrWhiteSpace(redisUser))
+                    redisOptions.User = redisUser;
+
+                builder.Services.AddSingleton<IDistributedCache>(sp =>
+                {
+                    var redis = new RedisCache(Options.Create(new RedisCacheOptions
+                    {
+                        ConfigurationOptions = redisOptions,
+                        InstanceName = "SYR_"
+                    }));
+                    var memory = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()));
+                    return new ResilientDistributedCache(
+                        redis, memory, sp.GetRequiredService<ILogger<ResilientDistributedCache>>());
+                });
+            }
 
             var app = builder.Build();
 
